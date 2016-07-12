@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:38:48 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 19:38:49 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 20:00:24 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -72,7 +72,7 @@ static int	init_game(t_server *s, struct timeval *lasttime)
     ((t_player *)p->second)->entity->speed_y = s->game.gravity / 2.0;
   s->game.map->cells->size = 0;
   i = 0;
-  while (i < s->game.origin->cells->size - 1)
+  while (i < s->game.origin->cells->size)
     vector_push_back(s->game.map->cells, vector_at(s->game.origin->cells, i++));
   send_to_all(s, "START\n");
   return (0);

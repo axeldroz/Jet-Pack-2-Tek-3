@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:39:49 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 19:41:30 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 19:51:10 2016 Loïc GIGOMAS
 */
 
 #include "server/player.h"
