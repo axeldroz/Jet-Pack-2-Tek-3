@@ -25,6 +25,6 @@ typedef struct s_descr
     int run;
 }               t_descr;
 
-t_cth_ret net_routine(t_cth_params var);
+t_cth_ret net_routine(t_cth_params params);
 
 #endif
