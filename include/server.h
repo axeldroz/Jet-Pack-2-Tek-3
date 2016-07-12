@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Fri Jul  8 15:58:13 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 14:16:49 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 14:56:27 2016 Loïc GIGOMAS
 */
 
 #ifndef SERVER_H_
@@ -23,6 +23,7 @@
 
 # define GAME_RUNNING	(0)
 # define GAME_FINISHED	(1)
+# define GAME_ERROR	(-1)
 
 # define NSD	__attribute__((unused))
 

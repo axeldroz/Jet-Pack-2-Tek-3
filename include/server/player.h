@@ -7,6 +7,7 @@
 # include "new.h"
 # include "entity.h"
 # include "splited.h"
+# include "pair.h"
 # include "gnl.h"
 
 # define RCV_ID		(1 << 0)
@@ -59,9 +60,9 @@ int	com_map(t_splited *str, t_player *c, t_server *s);
 int	com_ready(t_splited *str, t_player *c, t_server *s);
 int	com_fire(t_splited *str, t_player *c, t_server *s);
 
-int	cell_empty(t_server *s, t_player *p, void **cell);
-int	cell_elec(t_server *s, t_player *p, void **cell);
-int	cell_coin(t_server *s, t_player *p, void **cell);
+int	cell_empty(t_pair *p, void **cell, char *buff, size_t *offset);
+int	cell_elec(t_pair *p, void **cell, char *buff, size_t *offset);
+int	cell_coin(t_pair *p, void **cell, char *buff, size_t *offset);
 
 # include "server.h"
 

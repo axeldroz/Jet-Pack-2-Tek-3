@@ -19,7 +19,7 @@ int	remove_client(t_server *s, t_player *p)
   if (map_remove(s->clients, &p->fd) != MAP_NOERR)
     return (-1);
   FD_CLR(fd, &s->readfds);
-  if (IS_READY(p))
+  if (IS_READY(p) && s->game.n_ready)
     --s->game.n_ready;
   delete(p);
   printf("Removing client fd = %d\n", fd);
@@ -38,15 +38,18 @@ int	send_to_all(t_server *s, char *str)
 
 static int	check_colliders(t_server *s, t_player *p, char *b, size_t *o)
 {
-  int		ret;
-  t_pair	*pair;
+  /* int		ret; */
+  /* t_pair	*pair; */
 
-  if ((pair = new(t_pair)) == NULL)
-    return (GAME_FINISHED);
-  FOREACH(t_pair *, p, s->clients)
-    {
+  /* if ((pair = new(t_pair)) == NULL) */
+  /*   return (GAME_ERROR); */
+  /* pair->first = s; */
+  /* pair->second = p; */
+  /* FOREACH(t_pair *, p, s->clients) */
+  /*   { */
 
-    }
+  /*   } */
+  /* delete(pair); */
   return (GAME_RUNNING);
 }
 
@@ -60,8 +63,7 @@ int			calc_states(t_server *s, struct timeval *last)
 
 
   gettimeofday(&now, NULL);
-  time = ((now.tv_sec - last->tv_sec) + 1e-6 * (now.tv_usec - last->tv_usec));;
-  printf("time = %f\n", time);
+  time = ((now.tv_sec - last->tv_sec) + 1e-6 * (now.tv_usec - last->tv_usec));
   memset(buff, 0, GLBUFF);
   offset = 0;
   FOREACH(t_pair *, tmp, s->clients)
@@ -69,6 +71,8 @@ int			calc_states(t_server *s, struct timeval *last)
       p = tmp->second;
       if (update_pos(s, p, time) == GAME_FINISHED)
 	return (GAME_FINISHED);
+      if (check_colliders(s, p, buff, &offset) == GAME_ERROR)
+	return (GAME_ERROR);
       snprintf(&buff[offset], GLBUFF - offset, "PLAYER %d %f %f %d\n",
 	       p->fd, p->entity->x, p->entity->y, p->coins);
       offset = strlen(buff);

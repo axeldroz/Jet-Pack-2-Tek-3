@@ -55,7 +55,10 @@ static int	init_game(t_server *s, struct timeval *lasttime)
 {
   gettimeofday(lasttime, NULL);
   s->game.started = 1;
+  s->game.looser = 0;
   printf("Starting new game.\n");
+  FOREACH(t_pair *, p, s->clients)
+    ((t_player *)p->second)->entity->speed_y = s->game.gravity / 2.0;
   send_to_all(s, "START\n");
   return (0);
 }
@@ -76,13 +79,12 @@ static int		game_loop(t_server *s)
     }
   if (!s->game.started)
     return (init_game(s, &lasttime));
-  if ((ret = calc_states(s, &lasttime)) == -1)
+  if ((ret = calc_states(s, &lasttime)) == GAME_ERROR)
     return (-1);
   if (ret == 1)
     {
-      send_to_all(s, "FINISH -1");
-      while (s->clients->size > 0)
-	remove_client(s, VGET(t_pair, (t_vector *)s->clients, 0).second);
+      send_to_all(s, "FINISH -1\n");
+      s->game.n_ready = 0;
     }
   gettimeofday(&lasttime, NULL);
   return (0);
@@ -100,8 +102,8 @@ int			select_loop(t_server *s)
       readfds = s->readfds;
       writefds = s->writefds;
       tv = (struct timeval){0, 33333};
-      if ((rs = select(s->max_fd + 1, &readfds, &writefds, NULL, &tv)) == -1 ||
-	  game_loop(s) == -1)
+      if (game_loop(s) == -1 ||
+	  (rs = select(s->max_fd + 1, &readfds, &writefds, NULL, &tv)) == -1)
 	return (-1);
       if (rs == 0)
 	continue;
