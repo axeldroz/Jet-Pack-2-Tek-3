@@ -1,0 +1,32 @@
+rm -f obj/server/main.o obj/server/server.o obj/server/select.o obj/server/player.o obj/server/player_cmd.o obj/server/player_utils.o obj/server/player_phys.o obj/server/cells.o obj/server/../new.o obj/server/../vector_modifiers.o obj/server/../vector_accessors.o obj/server/../splited.o obj/server/../map_modifiers.o obj/server/../map_accessors.o obj/server/../entity.o obj/server/../tcpnets.o obj/server/../pair.o obj/server/../gnl.o obj/server/../game_map.o obj/server/../get_opt.o obj/server/../opt_types.o
+rm -f obj/client/main.o obj/client/../new.o obj/client/../tcpnetc.o obj/client/../thread.o
+rm -f serverJ2T3
+rm -f clientJ2T3
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/main.c -o obj/server/main.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/server.c -o obj/server/server.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/select.c -o obj/server/select.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/player.c -o obj/server/player.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/player_cmd.c -o obj/server/player_cmd.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/player_utils.c -o obj/server/player_utils.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/player_phys.c -o obj/server/player_phys.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/cells.c -o obj/server/cells.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../new.c -o obj/server/../new.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../vector_modifiers.c -o obj/server/../vector_modifiers.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../vector_accessors.c -o obj/server/../vector_accessors.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../splited.c -o obj/server/../splited.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../map_modifiers.c -o obj/server/../map_modifiers.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../map_accessors.c -o obj/server/../map_accessors.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../entity.c -o obj/server/../entity.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../tcpnets.c -o obj/server/../tcpnets.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../pair.c -o obj/server/../pair.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../gnl.c -o obj/server/../gnl.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../game_map.c -o obj/server/../game_map.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../get_opt.c -o obj/server/../get_opt.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ -c src/server/../opt_types.c -o obj/server/../opt_types.o 
+gcc -g3 -W -Wall -Wextra -std=gnu99 -I include/ obj/server/main.o obj/server/server.o obj/server/select.o obj/server/player.o obj/server/player_cmd.o obj/server/player_utils.o obj/server/player_phys.o obj/server/cells.o obj/server/../new.o obj/server/../vector_modifiers.o obj/server/../vector_accessors.o obj/server/../splited.o obj/server/../map_modifiers.o obj/server/../map_accessors.o obj/server/../entity.o obj/server/../tcpnets.o obj/server/../pair.o obj/server/../gnl.o obj/server/../game_map.o obj/server/../get_opt.o obj/server/../opt_types.o -o serverJ2T3  -lm
+map = map/1.map, port = 4242, gravity = -9.810000
+Map 'map/1.map' w = 95, h = 10 (950 cells)
+Adding new client fd = 4, pos {x=0.000000, y=5.000000}
+CMD : ID (replied : [ID 4\n])
+CMD : MAP (replied : [MAP 95 10 _...\n])
+CMD : READY

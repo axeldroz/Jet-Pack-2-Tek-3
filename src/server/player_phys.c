@@ -26,3 +26,33 @@ int	update_pos(t_server *s, t_player *p, double time)
     return (GAME_FINISHED);
   return (GAME_RUNNING);
 }
+
+/*
+** On centre en x, et on regarde a droite ou a gauche
+*/
+static int	get_cx(t_player *p, int corner)
+{
+  return (p->entity->x + (p->entity->width / 2.0) +
+	  (corner == 0 || corner == 1 ?
+	   -((p->entity->width / 2.0) * 0.99):
+	   ((p->entity->width / 2.0) * 0.99)));
+}
+
+/*
+** On centre en y, et on regarde en haut ou en bas
+*/
+static int	get_cy(t_player *p, int corner)
+{
+  return (p->entity->y + (p->entity->height / 2.0) +
+	  (corner == 0 || corner == 3 ?
+	   -((p->entity->height / 2.0) * 0.99):
+	   ((p->entity->height / 2.0) * 0.99)));
+}
+
+/*
+** Il faut convertir la position du joueur en position de map (Y inversé)
+*/
+size_t	get_cell(t_server *s, t_player *p, int c)
+{
+  return ((s->game.map->h - get_cy(p, c) - 1.0) * s->game.map->w + get_cx(p, c));
+}

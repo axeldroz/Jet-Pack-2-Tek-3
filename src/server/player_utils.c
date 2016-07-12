@@ -38,18 +38,30 @@ int	send_to_all(t_server *s, char *str)
 
 static int	check_colliders(t_server *s, t_player *p, char *b, size_t *o)
 {
-  /* int		ret; */
-  /* t_pair	*pair; */
+  size_t	c;
+  t_pair	*pa;
+  t_pair	*buf;
 
-  /* if ((pair = new(t_pair)) == NULL) */
-  /*   return (GAME_ERROR); */
-  /* pair->first = s; */
-  /* pair->second = p; */
-  /* FOREACH(t_pair *, p, s->clients) */
-  /*   { */
-
-  /*   } */
-  /* delete(pair); */
+  if ((pa = new(t_pair)) == NULL || (buf = new(t_pair)) == NULL)
+    return (GAME_ERROR);
+  pa->first = s;
+  pa->second = p;
+  buf->first = b;
+  buf->second = o;
+  if ((c = get_cell(s, p, 0)) < s->game.map->cells->size)
+    VGETP(t_cell_f, s->game.map->cells, c)
+      (pa, &s->game.map->cells->array[c], buf, c);
+  if ((c = get_cell(s, p, 1)) < s->game.map->cells->size)
+    VGETP(t_cell_f, s->game.map->cells, c)
+      (pa, &s->game.map->cells->array[c], buf, c);
+  if ((c = get_cell(s, p, 2)) < s->game.map->cells->size)
+    VGETP(t_cell_f, s->game.map->cells, c)
+      (pa, &s->game.map->cells->array[c], buf, c);
+  if ((c = get_cell(s, p, 3)) < s->game.map->cells->size)
+    VGETP(t_cell_f, s->game.map->cells, c)
+      (pa, &s->game.map->cells->array[c], buf, c);
+  delete(pa);
+  delete(buf);
   return (GAME_RUNNING);
 }
 

@@ -60,9 +60,13 @@ int	com_map(t_splited *str, t_player *c, t_server *s);
 int	com_ready(t_splited *str, t_player *c, t_server *s);
 int	com_fire(t_splited *str, t_player *c, t_server *s);
 
-int	cell_empty(t_pair *p, void **cell, char *buff, size_t *offset);
-int	cell_elec(t_pair *p, void **cell, char *buff, size_t *offset);
-int	cell_coin(t_pair *p, void **cell, char *buff, size_t *offset);
+typedef int	(*t_cell_f)(t_pair *, void **, t_pair *, size_t);
+
+int	cell_empty(t_pair *p, void **cell, t_pair *b, size_t pos);
+int	cell_elec(t_pair *p, void **cell, t_pair *b, size_t pos);
+int	cell_coin(t_pair *p, void **cell, t_pair *b, size_t pos);
+
+size_t	get_cell(t_server *s, t_player *p, int corner);
 
 # include "server.h"
 

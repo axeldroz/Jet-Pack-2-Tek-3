@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Fri Jul  8 18:52:38 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 12:41:32 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 16:05:56 2016 Loïc GIGOMAS
 */
 
 #include <math.h>
@@ -32,5 +32,7 @@ t_entity	*t_entity_new(t_entity_init var)
   e->accel_y = var.accel_y;
   e->weight = 1;
   e->speed_max = speed_max(e);
+  e->width = 1;
+  e->height = 1;
   return (e);
 }
