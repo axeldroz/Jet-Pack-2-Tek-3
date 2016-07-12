@@ -5,7 +5,7 @@
 ## Login   <gigoma_l@epitech.net>
 ##
 ## Started on  Thu Jul  7 09:25:01 2016 Loïc GIGOMAS
-## Last update Tue Jul 12 14:06:19 2016 Loïc GIGOMAS
+## Last update Tue Jul 12 17:36:41 2016 drozdz_b
 ##
 
 BIN_SERVER	= serverJ2T3
@@ -34,16 +34,28 @@ SRC_SERVER	= main.c \
 		  ../get_opt.c \
 		  ../opt_types.c
 
-SRC_CLIENT	= main.c \
-		  ../new.c \
-		  ../tcpnetc.c \
-		  ../thread.c
+SRC_CLIENT	= main.c 	\
+		  ../new.c 	\
+		  ../tcpnetc.c 	\
+		  ../thread.c	\
+		  graphic.c	\
+		  graphic2.c	\
+		  graphic3.c	\
+		  graphic4.c	\
+		  ../pair.c	\
+		  ../vector_accessors.c	\
+		  ../vector_modifiers.c	\
+		  ../map_modifiers.c	\
+		  ../game_map.c		\
+		  ../splited.c		\
+		  ../map_accessors.c	\
+		  ../gnl.c
 
 CC		= gcc
 
 CFLAGS		+= -W -Wall -Wextra -std=gnu99
 
-CFLAGS		+= -I include/
+CFLAGS		+= -Iinclude/
 
 RM		= rm -f
 
@@ -82,7 +94,7 @@ $(BIN_SERVER)	: $(OBJ_SERVER)
 		  $(CC) $(CFLAGS) $(OBJ_SERVER) -o $(BIN_SERVER) $(LDFLAGS) -lm
 
 $(BIN_CLIENT)	: $(OBJ_CLIENT)
-		  $(CC) $(CFLAGS) $(OBJ_CLIENT) -o $(BIN_CLIENT) $(LDFLAGS) -lpthread
+		  $(CC) $(CFLAGS) $(OBJ_CLIENT) -o $(BIN_CLIENT) $(LDFLAGS) -lpthread -lSDL2-2.0 -lSDL2_image
 
 server		: $(BIN_SERVER)
 

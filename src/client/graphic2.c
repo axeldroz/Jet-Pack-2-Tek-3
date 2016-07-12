@@ -5,10 +5,10 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 16:01:34 2016 drozdz_b
-** Last update Mon Jul 11 15:04:12 2016 drozdz_b
+** Last update Tue Jul 12 17:32:48 2016 drozdz_b
 */
 
-#include "graphic.h"
+#include "client/graphic.h"
 
 t_vector	*graph_create_players_text(t_window *win, t_vector *textures)
 {

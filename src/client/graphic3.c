@@ -5,10 +5,10 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 18:23:52 2016 drozdz_b
-** Last update Mon Jul 11 11:18:05 2016 drozdz_b
+** Last update Tue Jul 12 17:37:19 2016 drozdz_b
 */
 
-#include "graphic.h"
+#include "client/graphic.h"
 #include "foreach.h"
 
 void		graph_game_loop(t_window *win, t_graph_item *player)
@@ -19,7 +19,7 @@ void		graph_game_loop(t_window *win, t_graph_item *player)
   
   obj = graph_create_decor(win->renderer);
   map = new(t_game_map);
-  printf("ret = %d\n", map_from_file(map, "1.map", obj));
+  printf("ret = %d\n", map_from_file(map, "map/1.map", obj));
   printf("map h = %lu, w = %lu\n", map->h, map->w);
   FOREACH(SDL_Texture *, t, map->cells)
     printf("obj : val=%p\n", t);

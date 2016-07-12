@@ -5,10 +5,10 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 10:10:09 2016 drozdz_b
-** Last update Mon Jul 11 16:07:32 2016 drozdz_b
+** Last update Tue Jul 12 17:32:40 2016 drozdz_b
 */
 
-#include "graphic.h"
+#include "client/graphic.h"
 
 int	graph_init()
 {
