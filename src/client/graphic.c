@@ -54,18 +54,22 @@ int	graph_create_window(t_window *win, SDL_Rect rect, int size_tile)
   return (0);
 }
 
-t_graph_item	graph_create_player(t_window *win, SDL_Texture *texture, int zindex)
+t_graph_item	*graph_create_player(t_window *win, SDL_Texture *texture, int zindex)
 {
-  t_graph_item	item;
+  t_graph_item	*item;
 
-  item.pos.x = 0;
-  item.size.x = 64;
-  item.size.y = item.size.x;
-  item.pos.y = 1;
-  item.view.x = ((float)win->size_screen.x) / item.size.x;
-  item.view.y = ((float)win->size_screen.y) / item.size.y;
-  item.texture = texture;
-  item.zindex = zindex;
+  item = malloc(sizeof(*item));
+  if (item == NULL)
+    return (NULL);
+  item->pos.x = 0;
+  item->size.x = 64;
+  item->size.y = item->size.x;
+  item->pos.y = 1;
+  item->view.x = ((float)win->size_screen.x) / item->size.x;
+  item->view.y = ((float)win->size_screen.y) / item->size.y;
+  item->texture = texture;
+  item->zindex = zindex;
+  item->coins = 0;
   return (item);
 }
 

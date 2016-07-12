@@ -16,7 +16,7 @@ void set_fd_value(SOCKET fd, fd_set *readfd, fd_set *writefd, struct timeval *ti
     FD_ZERO(writefd);
     FD_SET(fd, readfd);
     FD_SET(fd, writefd);
-    *timer = (struct timeval){0, 0};
+    *timer = (struct timeval){0, 33333};
 }
 
 void select_loop(SOCKET fd, t_func *fctstop, t_func *fctr, t_func *fctw)

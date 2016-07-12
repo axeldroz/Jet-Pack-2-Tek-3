@@ -54,6 +54,7 @@ typedef struct	s_graph_item
   t_vector2d	pos;
   t_vector2d	size;
   t_vector2d	view;
+  int         coins;
   int		zindex;
 }		t_graph_item;
 
@@ -68,7 +69,9 @@ int	graph_create_window(t_window *win, SDL_Rect rect, int size_tile);
 void	graph_item_set_pos(t_graph_item *item, float x, float y);
 int		graph_add_texture(t_vector *vect, SDL_Renderer *renderer,
 				  const char *path);
-t_graph_item	graph_create_player(t_window *win, SDL_Texture *texture, int zindex);
+//t_graph_item	graph_create_player(t_window *win, SDL_Texture *texture, int zindex);
+t_graph_item	*graph_create_player(t_window *win, SDL_Texture *texture, int zindex);
+
 
 //VGETP(SDL_Texture*, vect, 0);
 /*
