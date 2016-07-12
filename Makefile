@@ -5,7 +5,7 @@
 ## Login   <gigoma_l@epitech.net>
 ##
 ## Started on  Thu Jul  7 09:25:01 2016 Loïc GIGOMAS
-## Last update Tue Jul 12 19:42:13 2016 Loïc GIGOMAS
+## Last update Tue Jul 12 20:18:54 2016 Loïc GIGOMAS
 ##
 
 BIN_SERVER	= serverJ2T3
@@ -35,9 +35,22 @@ SRC_SERVER	= main.c \
 		  ../opt_types.c
 
 SRC_CLIENT	= main.c \
+		  graphic.c \
+		  graphic2.c \
+		  graphic3.c \
+		  graphic4.c \
+		  client_net.c \
 		  ../new.c \
 		  ../tcpnetc.c \
-		  ../thread.c
+		  ../thread.c \
+		  ../game_map.c \
+		  ../gnl.c \
+		  ../map_modifiers.c \
+		  ../pair.c \
+		  ../map_accessors.c \
+		  ../vector_modifiers.c \
+		  ../vector_accessors.c
+
 
 CC		= gcc
 
@@ -82,7 +95,7 @@ $(BIN_SERVER)	: $(OBJ_SERVER)
 		  $(CC) $(CFLAGS) $(OBJ_SERVER) -o $(BIN_SERVER) $(LDFLAGS) -lm
 
 $(BIN_CLIENT)	: $(OBJ_CLIENT)
-		  $(CC) $(CFLAGS) $(OBJ_CLIENT) -o $(BIN_CLIENT) $(LDFLAGS) -lpthread
+		  $(CC) $(CFLAGS) $(OBJ_CLIENT) -o $(BIN_CLIENT) $(LDFLAGS) -lpthread -lSDL2 -lSDL2_image
 
 server		: $(BIN_SERVER)
 

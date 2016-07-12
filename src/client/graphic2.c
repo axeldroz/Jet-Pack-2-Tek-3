@@ -5,10 +5,10 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 16:01:34 2016 drozdz_b
-** Last update Mon Jul 11 15:04:12 2016 drozdz_b
+** Last update Tue Jul 12 20:19:50 2016 Loïc GIGOMAS
 */
 
-#include "graphic.h"
+#include "client/graphic.h"
 
 t_vector	*graph_create_players_text(t_window *win, t_vector *textures)
 {
@@ -43,7 +43,7 @@ int		graph_add_texture_map(t_map *map, SDL_Renderer *renderer,
   texture = IMG_LoadTexture(renderer, path);
   if (texture == NULL)
     {
-      fprintf(stderr, "Fail IMG_LoadTexture() : %s", SDL_GetError());
+      fprintf(stderr, "Fail IMG_LoadTexture() : %s\n", SDL_GetError());
       return (-1);
     }
   map_add(map, (void *)key, texture);

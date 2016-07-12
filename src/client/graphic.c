@@ -5,10 +5,10 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 10:10:09 2016 drozdz_b
-** Last update Mon Jul 11 16:07:32 2016 drozdz_b
+** Last update Tue Jul 12 20:20:50 2016 Loïc GIGOMAS
 */
 
-#include "graphic.h"
+#include "client/graphic.h"
 
 int	graph_init()
 {
@@ -34,20 +34,21 @@ int	graph_create_window(t_window *win, SDL_Rect rect, int size_tile)
   win->size_map.x = rect.x;
   win->size_map.y = rect.y;
   win->size_tile = size_tile;
-  win->window = SDL_CreateWindow("Put a sprite",SDL_WINDOWPOS_UNDEFINED,
-				  SDL_WINDOWPOS_UNDEFINED,
-				  win->size_screen.x,
-				  win->size_screen.y,
-				  SDL_WINDOW_SHOWN);
+  win->window = SDL_CreateWindow("JetPack2Tek3 drozdz_b & gigoma_l",
+				 SDL_WINDOWPOS_UNDEFINED,
+				 SDL_WINDOWPOS_UNDEFINED,
+				 win->size_screen.x,
+				 win->size_screen.y,
+				 SDL_WINDOW_SHOWN);
   if (win->window == NULL)
     {
-      fprintf(stderr, "Fail SDL_CreateWindow() : %s", SDL_GetError());
+      fprintf(stderr, "Fail SDL_CreateWindow() : %s\n", SDL_GetError());
       return (-1);
     }
   win->renderer = SDL_CreateRenderer(win->window, -1, SDL_RENDERER_ACCELERATED);
   if (win->renderer == NULL)
     {
-      fprintf(stderr, "Fail SDL_CreateRenderer() : %s", SDL_GetError());
+      fprintf(stderr, "Fail SDL_CreateRenderer() : %s\n", SDL_GetError());
       return (-2);
     }
   SDL_SetRenderDrawColor(win->renderer, 255, 0, 0, 255);
@@ -83,7 +84,7 @@ int		graph_add_texture(t_vector *vect, SDL_Renderer *renderer,
   texture = IMG_LoadTexture(renderer, path);
   if (texture == NULL)
     {
-      fprintf(stderr, "Fail IMG_LoadTexture() : %s", SDL_GetError());
+      fprintf(stderr, "Fail IMG_LoadTexture() : %s\n", SDL_GetError());
       return (-1);
     }
   vector_push_back(vect, texture);
