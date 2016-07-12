@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Fri Jul  8 18:45:30 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 12:32:05 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 16:05:29 2016 Loïc GIGOMAS
 */
 
 #ifndef ENTITY_H_
@@ -42,6 +42,8 @@ typedef struct	s_entity
   double	accel_x;
   double	accel_y;
   double	speed_max;
+  double	width;
+  double	height;
 }		t_entity;
 
 t_entity	*t_entity_new(t_entity_init var);

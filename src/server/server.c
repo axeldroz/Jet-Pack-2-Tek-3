@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Fri Jul  8 15:58:20 2016 Loïc GIGOMAS
-** Last update Mon Jul 11 16:04:03 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 19:37:18 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -26,6 +26,7 @@ void		ser_del(void *ptr)
   delete(s->net);
   delete(s->clients);
   delete(s->commands);
+  delete(s->game.origin);
   delete(s->game.map);
 }
 
@@ -50,7 +51,6 @@ static int	no_such_cmd(t_splited *str, t_player *c, t_server *s)
     return (0);
   if (!c || !s)
     return (-1);
-  fprintf(stderr, "No such command : '%s'\n", VGETP(char *, str->words, 0));
   return (0);
 }
 
@@ -63,6 +63,7 @@ t_server	*t_server_new(t_server_init var)
       (s->net = new(t_tcpnets, var.port)) == NULL ||
       (s->clients = new(t_map, &comp_fd)) == NULL ||
       (s->commands = new(t_map, &comp_str, 0, &no_such_cmd)) == NULL ||
+      (s->game.origin = new(t_game_map)) == NULL ||
       (s->game.map = new(t_game_map)) == NULL)
     return (NULL);
   FD_ZERO(&s->readfds);

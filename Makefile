@@ -5,7 +5,7 @@
 ## Login   <gigoma_l@epitech.net>
 ##
 ## Started on  Thu Jul  7 09:25:01 2016 Loïc GIGOMAS
-## Last update Tue Jul 12 17:36:41 2016 drozdz_b
+## Last update Tue Jul 12 21:36:26 2016 drozdz_b
 ##
 
 BIN_SERVER	= serverJ2T3
