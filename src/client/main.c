@@ -6,20 +6,22 @@
 
 #include "graphic.h"
 #include "vector.h"
+#include "tcpnetc.h"
 
-int		main(void)
+int		main(int ac, char **av)
 {
   t_window	win;
   t_graph_item	player;
   SDL_Rect	rect;
   int		ret;
   t_vector	*vect;
+  t_tcpnetc *cli;
 
+  
   vect = new(t_vector);
   graph_init();
   ret = graph_create_window(&win, (SDL_Rect)
 			  {MAP_WIDTH, MAP_HEIGH, SCREEN_WIDTH, SCREEN_HEIGHT}, TILE_SIZE);
-  //
   graph_add_texture(vect, win.renderer, "sprites/rocketmouse_run04@2x.png");
   rect.x = 0;
   rect.y = 0;
