@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Fri Jul  8 15:58:13 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 14:56:27 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 19:28:52 2016 Loïc GIGOMAS
 */
 
 #ifndef SERVER_H_
@@ -31,6 +31,7 @@ typedef struct	s_player	t_player;
 
 typedef struct	s_game
 {
+  t_game_map	*origin;
   t_game_map	*map;
   float		gravity;
   int		n_ready;

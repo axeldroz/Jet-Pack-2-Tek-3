@@ -1,3 +1,13 @@
+/*
+** player_cmd.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Tue Jul 12 19:37:52 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 19:37:53 2016 Loïc GIGOMAS
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "server.h"
@@ -11,7 +21,6 @@ int	com_id(NSD t_splited *str, t_player *p, t_server *s)
   sprintf(buff, "ID %d\n", p->fd);
   if (write_iov(s, p, buff) == -1)
     return (-1);
-  printf("CMD : ID (replied : [ID %d\\n])\n", p->fd);
   if (!IS_READY(p) && (p->ready |= RCV_ID) && IS_READY(p))
     ++s->game.n_ready;
   return (0);
@@ -29,8 +38,6 @@ int	com_map(NSD t_splited *str, t_player *p, t_server *s)
       free(buff);
       return (-1);
     }
-  printf("CMD : MAP (replied : [MAP %lu %lu %c...\\n])\n",
-	 s->game.map->w, s->game.map->h, *s->game.map->full_str);
   free(buff);
   if (!IS_READY(p) && (p->ready |= RCV_MAP) && IS_READY(p))
     ++s->game.n_ready;
@@ -39,7 +46,6 @@ int	com_map(NSD t_splited *str, t_player *p, t_server *s)
 
 int	com_ready(NSD t_splited *str, t_player *p, t_server *s)
 {
-  printf("CMD : READY\n");
   if (!IS_READY(p) && (p->ready |= RCV_READY) && IS_READY(p))
     ++s->game.n_ready;
   return (0);
@@ -56,6 +62,5 @@ int	com_fire(t_splited *str, t_player *p, NSD t_server *s)
     p->fire = 0;
   else if (p->fire > 1)
     p->fire = 1;
-  printf("CMD : FIRE %s (new state = %d)\n", word, p->fire);
   return (0);
 }

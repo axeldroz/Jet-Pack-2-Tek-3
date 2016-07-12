@@ -1,3 +1,13 @@
+/*
+** main.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Tue Jul 12 19:38:01 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 19:38:29 2016 Loïc GIGOMAS
+*/
+
 #include <stdio.h>
 #include <signal.h>
 #include "tcpnets.h"
@@ -31,13 +41,17 @@ static int	get_map(t_server *s, char *file)
   map_add(known, (void *)((long)'_'), &cell_empty);
   map_add(known, (void *)((long)'e'), &cell_elec);
   map_add(known, (void *)((long)'c'), &cell_coin);
-  if (map_from_file(s->game.map, file, known) == -1 ||
-      s->game.map->cells->size == 0 || s->game.map->full_str == NULL)
+  if (map_from_file(s->game.origin, file, known) == -1 ||
+      s->game.origin->cells->size == 0 || s->game.origin->full_str == NULL)
     {
       fprintf(stderr, "Invalid map \"%s\"\n", file);
       return (-1);
     }
-  printf("Map '%s' w = %lu, h = %lu (%lu cells)\n", file, s->game.map->w, s->game.map->h, s->game.map->str_size);
+  if ((s->game.map->full_str = strdup(s->game.origin->full_str)) == NULL)
+    return (-1);
+  s->game.map->str_size = s->game.origin->str_size;
+  s->game.map->w = s->game.origin->w;
+  s->game.map->h = s->game.origin->h;
   return (0);
 }
 
@@ -64,7 +78,6 @@ static int	get_args(t_server **s, int ac, char **av)
     }
   if ((*s = new(t_server, port, gravity)) == NULL)
     return (-1);
-  printf("map = %s, port = %d, gravity = %f\n", map, port, gravity);
   return (get_map(*s, map));
 }
 

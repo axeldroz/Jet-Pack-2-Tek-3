@@ -1,3 +1,13 @@
+/*
+** select.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Tue Jul 12 19:38:48 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 19:38:49 2016 Loïc GIGOMAS
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/select.h>
@@ -53,12 +63,17 @@ static int	players_loop(t_server *s, fd_set *readfds, fd_set *writefds)
 
 static int	init_game(t_server *s, struct timeval *lasttime)
 {
+  size_t	i;
+
   gettimeofday(lasttime, NULL);
   s->game.started = 1;
   s->game.looser = 0;
-  printf("Starting new game.\n");
   FOREACH(t_pair *, p, s->clients)
     ((t_player *)p->second)->entity->speed_y = s->game.gravity / 2.0;
+  s->game.map->cells->size = 0;
+  i = 0;
+  while (i < s->game.origin->cells->size - 1)
+    vector_push_back(s->game.map->cells, vector_at(s->game.origin->cells, i++));
   send_to_all(s, "START\n");
   return (0);
 }
@@ -81,9 +96,9 @@ static int		game_loop(t_server *s)
     return (init_game(s, &lasttime));
   if ((ret = calc_states(s, &lasttime)) == GAME_ERROR)
     return (-1);
-  if (ret == 1)
+  if (ret == 1 || s->game.looser != 0)
     {
-      send_to_all(s, "FINISH -1\n");
+      end_game(s);
       s->game.n_ready = 0;
     }
   gettimeofday(&lasttime, NULL);

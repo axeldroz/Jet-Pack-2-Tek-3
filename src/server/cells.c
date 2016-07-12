@@ -1,3 +1,13 @@
+/*
+** cells.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Tue Jul 12 19:40:38 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 19:40:39 2016 Loïc GIGOMAS
+*/
+
 #include <stdio.h>
 #include "pair.h"
 #include "server.h"
@@ -20,7 +30,7 @@ int	cell_elec(t_pair *p, NSD void **c, NSD t_pair *b, NSD size_t pos)
   pl = p->second;
   if (!(s->game.looser))
     s->game.looser = pl->fd;
-  else
+  else if (s->game.looser != pl->fd)
     s->game.looser = -1;
   return (0);
 }

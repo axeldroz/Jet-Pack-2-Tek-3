@@ -1,3 +1,13 @@
+/*
+** player_utils.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Tue Jul 12 19:37:30 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 19:37:44 2016 Loïc GIGOMAS
+*/
+
 #include <stdio.h>
 #include "pair.h"
 #include "server/player.h"
@@ -22,7 +32,6 @@ int	remove_client(t_server *s, t_player *p)
   if (IS_READY(p) && s->game.n_ready)
     --s->game.n_ready;
   delete(p);
-  printf("Removing client fd = %d\n", fd);
   if (fd == s->max_fd)
     max_fd(s);
   return (0);
@@ -36,33 +45,38 @@ int	send_to_all(t_server *s, char *str)
   return (0);
 }
 
-static int	check_colliders(t_server *s, t_player *p, char *b, size_t *o)
+/*
+** stats[0] = id winner
+** stats[1] = coins winner
+** memset : all to -1;
+*/
+int		end_game(t_server *s)
 {
-  size_t	c;
-  t_pair	*pa;
-  t_pair	*buf;
+  char		buff[24];
+  t_stats	st;
 
-  if ((pa = new(t_pair)) == NULL || (buf = new(t_pair)) == NULL)
-    return (GAME_ERROR);
-  pa->first = s;
-  pa->second = p;
-  buf->first = b;
-  buf->second = o;
-  if ((c = get_cell(s, p, 0)) < s->game.map->cells->size)
-    VGETP(t_cell_f, s->game.map->cells, c)
-      (pa, &s->game.map->cells->array[c], buf, c);
-  if ((c = get_cell(s, p, 1)) < s->game.map->cells->size)
-    VGETP(t_cell_f, s->game.map->cells, c)
-      (pa, &s->game.map->cells->array[c], buf, c);
-  if ((c = get_cell(s, p, 2)) < s->game.map->cells->size)
-    VGETP(t_cell_f, s->game.map->cells, c)
-      (pa, &s->game.map->cells->array[c], buf, c);
-  if ((c = get_cell(s, p, 3)) < s->game.map->cells->size)
-    VGETP(t_cell_f, s->game.map->cells, c)
-      (pa, &s->game.map->cells->array[c], buf, c);
-  delete(pa);
-  delete(buf);
-  return (GAME_RUNNING);
+  st = (t_stats){0, 0};
+  if (!s->game.looser)
+    {
+      FOREACH(t_pair *, p, s->clients)
+	if (st.id == 0 || ((t_player *)p->second)->coins > st.coins)
+	  st = (t_stats){*(int *)p->first, ((t_player *)p->second)->coins};
+	else if (st.id != 0 && ((t_player *)p->second)->coins == st.coins)
+	  st.id = -1;
+    }
+  else if (s->game.looser == -1)
+    st.id = -1;
+  else
+    {
+      FOREACH(t_pair *, p, s->clients)
+	if (*(int *)p->first != s->game.looser)
+	  {
+	    st.id = *(int *)p->first;
+	    break;
+	  }
+    }
+  snprintf(buff, 24, "FINISH %d\n", st.id);
+  return (send_to_all(s, buff));
 }
 
 int			calc_states(t_server *s, struct timeval *last)

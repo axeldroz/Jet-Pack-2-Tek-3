@@ -1,3 +1,13 @@
+/*
+** player_phys.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Tue Jul 12 19:39:49 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 19:41:30 2016 Loïc GIGOMAS
+*/
+
 #include "server/player.h"
 
 int	update_pos(t_server *s, t_player *p, double time)
@@ -24,6 +34,35 @@ int	update_pos(t_server *s, t_player *p, double time)
   p->entity->x += p->entity->speed_x * time;
   if (p->entity->x >= s->game.map->w)
     return (GAME_FINISHED);
+  return (GAME_RUNNING);
+}
+
+int	check_colliders(t_server *s, t_player *p, char *b, size_t *o)
+{
+  size_t	c;
+  t_pair	*pa;
+  t_pair	*buf;
+
+  if ((pa = new(t_pair)) == NULL || (buf = new(t_pair)) == NULL)
+    return (GAME_ERROR);
+  pa->first = s;
+  pa->second = p;
+  buf->first = b;
+  buf->second = o;
+  if ((c = get_cell(s, p, 0)) < s->game.map->cells->size)
+    VGETP(t_cell_f, s->game.map->cells, c)
+      (pa, &s->game.map->cells->array[c], buf, c);
+  if ((c = get_cell(s, p, 1)) < s->game.map->cells->size)
+    VGETP(t_cell_f, s->game.map->cells, c)
+      (pa, &s->game.map->cells->array[c], buf, c);
+  if ((c = get_cell(s, p, 2)) < s->game.map->cells->size)
+    VGETP(t_cell_f, s->game.map->cells, c)
+      (pa, &s->game.map->cells->array[c], buf, c);
+  if ((c = get_cell(s, p, 3)) < s->game.map->cells->size)
+    VGETP(t_cell_f, s->game.map->cells, c)
+      (pa, &s->game.map->cells->array[c], buf, c);
+  delete(pa);
+  delete(buf);
   return (GAME_RUNNING);
 }
 

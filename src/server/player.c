@@ -1,3 +1,13 @@
+/*
+** player.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Tue Jul 12 19:40:15 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 19:40:33 2016 Loïc GIGOMAS
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -49,8 +59,6 @@ int		add_client(t_server *s)
 	{
 	  return (-1);
 	}
-      printf("Adding new client fd = %d, pos {x=%f, y=%f}\n", fd,
-	     p->entity->x, p->entity->y);
       FD_SET(fd, &s->readfds);
       p->entity->speed_y = 5.0;
       if (s->max_fd < fd)
