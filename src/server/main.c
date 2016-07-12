@@ -2,7 +2,7 @@
 #include <signal.h>
 #include "tcpnets.h"
 #include "server.h"
-#include "foreach.h"
+#include "server/player.h"
 #include "get_opt.h"
 
 static int	add_commands(t_server *s)
@@ -28,9 +28,9 @@ static int	get_map(t_server *s, char *file)
   t_map		*known;
 
   known = new(t_map, &char_cmp);
-  map_add(known, (void *)((long)'_'), "_");
-  map_add(known, (void *)((long)'e'), "e");
-  map_add(known, (void *)((long)'c'), "c");
+  map_add(known, (void *)((long)'_'), &cell_empty);
+  map_add(known, (void *)((long)'e'), &cell_elec);
+  map_add(known, (void *)((long)'c'), &cell_coin);
   if (map_from_file(s->game.map, file, known) == -1 ||
       s->game.map->cells->size == 0 || s->game.map->full_str == NULL)
     {

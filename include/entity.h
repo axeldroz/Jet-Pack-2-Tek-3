@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Fri Jul  8 18:45:30 2016 Loïc GIGOMAS
-** Last update Fri Jul  8 19:03:45 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 12:32:05 2016 Loïc GIGOMAS
 */
 
 #ifndef ENTITY_H_
@@ -13,12 +13,22 @@
 
 # include "new.h"
 
+# define AIR	(1.2)
+# define WATER	(1030.0)
+# define IRON	(7870.0)
+# define WOOD	(700.0)
+
+# define DRAG_COEFF	(1.0)
+# define OBJ_DIAMETER	(1.0)
+# define FLUID_DENS	(AIR)
+# define OBJ_DENS	((WATER + IRON) / 2.0)
+
 typedef struct	s_entity_init
 {
   double	x;
   double	y;
-  double	weight;
-  double	gravity;
+  double	accel_x;
+  double	accel_y;
 }		t_entity_init;
 
 typedef struct	s_entity
@@ -27,9 +37,11 @@ typedef struct	s_entity
   double	x;
   double	y;
   double	weight;
-  double	gravity;
   double	speed_x;
   double	speed_y;
+  double	accel_x;
+  double	accel_y;
+  double	speed_max;
 }		t_entity;
 
 t_entity	*t_entity_new(t_entity_init var);

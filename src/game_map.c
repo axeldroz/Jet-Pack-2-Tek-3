@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Sat Jul  9 18:17:56 2016 Loïc GIGOMAS
-** Last update Mon Jul 11 16:52:35 2016 Loïc GIGOMAS
+** Last update Mon Jul 11 17:53:28 2016 Loïc GIGOMAS
 */
 
 #ifdef _WIN32
@@ -40,7 +40,7 @@ static int	push_line(t_game_map *m, char *line, t_map *known)
   strncpy(&m->full_str[m->str_size], line, i);
   m->str_size += i;
   m->full_str[m->str_size] = 0;
-  return (0);
+  return (1);
 }
 
 int		map_from_file(t_game_map *m, char *file, t_map *known)
@@ -66,7 +66,7 @@ int		map_from_file(t_game_map *m, char *file, t_map *known)
 	free(line);
       }
   CLOSE(fd);
-  if (gnl._buff && push_line(m, gnl._buff, known) == -1)
+  if (gnl._buff && ++m->h && push_line(m, gnl._buff, known) == -1)
     ret = -1;
   free(gnl._buff);
   return (ret);

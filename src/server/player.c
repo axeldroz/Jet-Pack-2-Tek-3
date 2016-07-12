@@ -25,7 +25,7 @@ t_player	*t_player_new(t_player_init var)
 
   if (!var.fd ||
       (p = (t_player *)new(t_object, sizeof(t_player), &pla_del)) == NULL ||
-      (p->entity = new(t_entity, var.x, var.y, 1, var.gravity)) == NULL)
+      (p->entity = new(t_entity, var.x, var.y, 5, var.gravity)) == NULL)
     return (NULL);
   p->fd = var.fd;
   return (p);
@@ -43,13 +43,16 @@ int		add_client(t_server *s)
 	  close(fd);
 	  return (0);
 	}
-      if ((p = new(t_player, fd, -9.81)) == NULL ||
+      if ((p = new(t_player, fd, s->game.gravity,
+		   (float)(s->game.map->h / 2.0))) == NULL ||
 	  map_add(s->clients, (void *)(&p->fd), p) != MAP_NOERR)
 	{
 	  return (-1);
 	}
-      printf("Adding new client fd = %d\n", fd);
+      printf("Adding new client fd = %d, pos {x=%f, y=%f}\n", fd,
+	     p->entity->x, p->entity->y);
       FD_SET(fd, &s->readfds);
+      p->entity->speed_y = 5.0;
       if (s->max_fd < fd)
 	s->max_fd = fd;
       return (1);

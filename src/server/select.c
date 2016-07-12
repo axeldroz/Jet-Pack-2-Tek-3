@@ -8,23 +8,16 @@
 #include "server/player.h"
 #include "foreach.h"
 
-static int	max_fd(t_server *s)
-{
-  s->max_fd = s->net->socket;
-  FOREACH(t_pair *, p, s->clients)
-    if (*(int *)p->first > s->max_fd)
-      s->max_fd = *(int *)p->first;
-  return (0);
-}
-
 static int	player_read(t_player *c, t_server *s)
 {
   int		r;
   char		*str;
   t_splited	*cmp;
+  int		first;
 
   str = NULL;
-  if (c && (r = get_next_line(&c->gnl, c->fd, &str)) < 3)
+  first = 1;
+  while (c && (r = get_next_line(&c->gnl, (first ? c->fd : -1), &str)) < 2)
     {
       if (r == 0 || r == 1)
 	{
@@ -37,33 +30,20 @@ static int	player_read(t_player *c, t_server *s)
 	  if (r == -1)
 	    return (-1);
 	}
-      return (0);
+      first = 0;
     }
-  return (-1);
+  return (r >= 3 ? -1 : 0);
 }
 
 static int	players_loop(t_server *s, fd_set *readfds, fd_set *writefds)
 {
   t_player	*pl;
-  int		fd;
 
   FOREACH(t_pair *, p, s->clients)
     {
       pl = p->second;
-      if (FD_ISSET(pl->fd, readfds))
-	{
-	  if (player_read(pl, s) == -1)
-	    {
-	      fd = *(int *)p->first;
-	      map_remove(s->clients, &pl->fd);
-	      FD_CLR(pl->fd, &s->readfds);
-	      if (IS_READY(pl))
-		--s->game.n_ready;
-	      delete(pl);
-	      if (fd == s->max_fd)
-		return (max_fd(s));
-	    }
-	}
+      if (FD_ISSET(pl->fd, readfds) && player_read(pl, s) == -1)
+	return (remove_client(s, pl));
       if (FD_ISSET(pl->fd, writefds))
 	if (iov_send(s, pl) == -1)
 	  return (-1);
@@ -71,28 +51,40 @@ static int	players_loop(t_server *s, fd_set *readfds, fd_set *writefds)
   return (0);
 }
 
+static int	init_game(t_server *s, struct timeval *lasttime)
+{
+  gettimeofday(lasttime, NULL);
+  s->game.started = 1;
+  printf("Starting new game.\n");
+  send_to_all(s, "START\n");
+  return (0);
+}
+
 static int		game_loop(t_server *s)
 {
-  static clock_t	lasttime;
+  int			ret;
+  static struct timeval	lasttime;
 
   if (!s)
     return (-1);
   if (s->game.n_ready < 2)
     {
+      while (s->game.started && s->clients->size > 0)
+	remove_client(s, VGET(t_pair, (t_vector *)s->clients, 0).second);
       s->game.started = 0;
       return (0);
     }
   if (!s->game.started)
-    {
-      lasttime = clock();
-      s->game.started = 1;
-      printf("Starting new game.\n");
-      send_to_all(s, "START\n");
-    }
-  if (calc_states(s, lasttime) == -1 ||
-      send_states(s) == -1)
+    return (init_game(s, &lasttime));
+  if ((ret = calc_states(s, &lasttime)) == -1)
     return (-1);
-  printf("{%f}[%f] Game loop.\n", (double)clock(), ((double)clock()) / (double)CLOCKS_PER_SEC);
+  if (ret == 1)
+    {
+      send_to_all(s, "FINISH -1");
+      while (s->clients->size > 0)
+	remove_client(s, VGET(t_pair, (t_vector *)s->clients, 0).second);
+    }
+  gettimeofday(&lasttime, NULL);
   return (0);
 }
 
@@ -107,7 +99,7 @@ int			select_loop(t_server *s)
     {
       readfds = s->readfds;
       writefds = s->writefds;
-      tv = (struct timeval){0, 50000};
+      tv = (struct timeval){0, 33333};
       if ((rs = select(s->max_fd + 1, &readfds, &writefds, NULL, &tv)) == -1 ||
 	  game_loop(s) == -1)
 	return (-1);

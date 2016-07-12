@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Fri Jul  8 15:58:13 2016 Loïc GIGOMAS
-** Last update Mon Jul 11 16:03:36 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 14:16:49 2016 Loïc GIGOMAS
 */
 
 #ifndef SERVER_H_
@@ -21,6 +21,9 @@
 # include "map.h"
 # include "game_map.h"
 
+# define GAME_RUNNING	(0)
+# define GAME_FINISHED	(1)
+
 # define NSD	__attribute__((unused))
 
 typedef struct	s_player	t_player;
@@ -31,7 +34,7 @@ typedef struct	s_game
   float		gravity;
   int		n_ready;
   int		started;
-  char		*state;
+  int		looser;
 }		t_game;
 
 typedef struct	s_server_init

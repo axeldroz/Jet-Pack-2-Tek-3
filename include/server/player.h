@@ -2,7 +2,7 @@
 # define PLAYER_H_
 
 # include <sys/uio.h>
-# include <time.h>
+# include <sys/time.h>
 
 # include "new.h"
 # include "entity.h"
@@ -13,6 +13,8 @@
 # define RCV_MAP	(1 << 1)
 # define RCV_READY	(1 << 2)
 # define RCV_ALL	(RCV_ID | RCV_MAP | RCV_READY)
+
+# define GLBUFF		(1024)
 
 # define IS_READY(p)	(p->ready == RCV_ALL)
 
@@ -34,7 +36,7 @@ typedef struct	s_player
   t_gnl		gnl;
   int		ready;
   int		fire;
-  size_t	coins;
+  int		coins;
   int		iovcnt;
   struct iovec	io[16];
 }		t_player;
@@ -45,15 +47,21 @@ int	write_iov(t_server *s, t_player *p, char *msg);
 int	iov_send(t_server *s, t_player *p);
 
 int	send_states(t_server *s);
-int	calc_states(t_server *s, clock_t lasttime);
+int	calc_states(t_server *s, struct timeval *lasttime);
 int	send_to_all(t_server *s, char *str);
+int	update_pos(t_server *s, t_player *p, double time);
 
 int	add_client(t_server *s);
+int	remove_client(t_server *s, t_player *p);
 
 int	com_id(t_splited *str, t_player *c, t_server *s);
 int	com_map(t_splited *str, t_player *c, t_server *s);
 int	com_ready(t_splited *str, t_player *c, t_server *s);
 int	com_fire(t_splited *str, t_player *c, t_server *s);
+
+int	cell_empty(t_server *s, t_player *p, void **cell);
+int	cell_elec(t_server *s, t_player *p, void **cell);
+int	cell_coin(t_server *s, t_player *p, void **cell);
 
 # include "server.h"
 

@@ -5,7 +5,7 @@
 ## Login   <gigoma_l@epitech.net>
 ##
 ## Started on  Thu Jul  7 09:25:01 2016 Loïc GIGOMAS
-## Last update Mon Jul 11 15:55:53 2016 Loïc GIGOMAS
+## Last update Tue Jul 12 14:06:19 2016 Loïc GIGOMAS
 ##
 
 BIN_SERVER	= serverJ2T3
@@ -18,6 +18,8 @@ SRC_SERVER	= main.c \
 		  player.c \
 		  player_cmd.c \
 		  player_utils.c \
+		  player_phys.c \
+		  cells.c \
 		  ../new.c \
 		  ../vector_modifiers.c \
 		  ../vector_accessors.c \
@@ -65,7 +67,7 @@ OBJ_SERVER	= $(addsuffix .o, $(basename $(subst $(SRCDST1), $(OBJDST1), $(SRC1))
 
 OBJ_CLIENT	= $(addsuffix .o, $(basename $(subst $(SRCDST2), $(OBJDST2), $(SRC2))))
 
-all		: $(BIN_SERVER) $(BIN_CLIENT)
+all		: server client
 		  @echo -e "\033[32mPlease do '\033[1msource autocompletion\033[0;32m' in your shell.\033[0m"
 
 $(OBJDST1)/%.o	: $(SRCDST1)/%.c
@@ -77,10 +79,14 @@ $(OBJDST2)/%.o	: $(SRCDST2)/%.c
 		  $(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
 
 $(BIN_SERVER)	: $(OBJ_SERVER)
-		  $(CC) $(CFLAGS) $(OBJ_SERVER) -o $(BIN_SERVER) $(LDFLAGS)
+		  $(CC) $(CFLAGS) $(OBJ_SERVER) -o $(BIN_SERVER) $(LDFLAGS) -lm
 
 $(BIN_CLIENT)	: $(OBJ_CLIENT)
 		  $(CC) $(CFLAGS) $(OBJ_CLIENT) -o $(BIN_CLIENT) $(LDFLAGS) -lpthread
+
+server		: $(BIN_SERVER)
+
+client		: $(BIN_CLIENT)
 
 clean		:
 		  $(RM) $(OBJ_SERVER)
@@ -92,4 +98,4 @@ fclean		: clean
 
 re		: fclean all
 
-.PHONY		: all clean fclean re
+.PHONY		: all clean fclean re server client
