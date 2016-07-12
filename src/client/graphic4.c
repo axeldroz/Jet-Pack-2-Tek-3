@@ -1,3 +1,13 @@
+/*
+** graphic4.c for graphic in /home/drozdz_b/rendu/jetpack2Tek3/src/client
+**
+** Made by drozdz_b
+** Login   <drozdz_b@epitech.net>
+**
+** Started on  Tue Jul 12 17:33:12 2016 drozdz_b
+** Last update Tue Jul 12 21:41:32 2016 Loïc GIGOMAS
+*/
+
 #include "client/graphic.h"
 
 /*t_graph_item	graph_create_player(t_window *win, SDL_Texture *texture, int zindex)

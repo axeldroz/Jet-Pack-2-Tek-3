@@ -7,6 +7,8 @@
 #include "client/graphic.h"
 #include "vector.h"
 #include "tcpnetc.h"
+#include "get_opt.h"
+#include "thread.h"
 
 int		main(int ac, char **av)
 {
@@ -16,8 +18,22 @@ int		main(int ac, char **av)
   int		ret;
   t_vector	*vect;
   t_tcpnetc *cli;
+  t_getopt *opt;
+  int port;
+  char *host;
+  t_thread *th;
 
-
+  if ((opt = new(t_getopt)) == NULL 
+       || opt_register(opt, 'p', INT, MANDATORY) != OPT_NOERR 
+       || opt_register(opt, 'h', PCHAR, MANDATORY) != OPT_NOERR)
+    return (-1);
+  if (opt_parse_params(opt, ac, av) != OPT_NOERR
+      || opt_getvar(opt, 'p', &port) != OPT_NOERR
+      || opt_getvar(opt, 'h', &host))
+        return (-1);  
+  th = new(t_thread, net_routine, NULL);        
+  cli = new(t_tcpnetc, host, port);
+  
   vect = new(t_vector);
   graph_init();
   ret = graph_create_window(&win, (SDL_Rect)
