@@ -1,0 +1,11 @@
+a.out
+*.o
+*~
+*.*~
+.*~
+\#*\#
+.\#*
+bin/*
+obj/*
+clientJ2T3
+serverJ2T3
