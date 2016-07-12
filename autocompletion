@@ -1,0 +1,59 @@
+#!/bin/sh
+## autocompletion for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+##
+## Made by Loïc GIGOMAS
+## Login   <gigoma_l@epitech.net>
+##
+## Started on  Thu Jul  7 09:32:04 2016 Loïc GIGOMAS
+## Last update Thu Jul  7 09:43:53 2016 Loïc GIGOMAS
+##
+
+_serverJ2T3()
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts="-p -g -m"
+
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    case "$prev" in
+	-p)
+	    COMPREPLY=( $( compgen -W "4242" -- $cur ) )
+	    return 0
+	    ;;
+	-g)
+	    COMPREPLY=( $( compgen -W "-9.81" -- $cur ) )
+	    return 0
+	    ;;
+	-m)
+	    COMPREPLY=( $( compgen -W "$(ls map/*.map)" -- $cur ) )
+	    return 0
+	    ;;
+    esac
+}
+complete -F _serverJ2T3 ./serverJ2T3
+complete -F _serverJ2T3 ./debug_server.sh
+
+_clientJ2T3()
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts="-h -p"
+
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    case "$prev" in
+	-h)
+	    COMPREPLY=( $( compgen -W "127.0.0.1" -- $cur ) )
+	    return 0
+	    ;;
+	-p)
+	    COMPREPLY=( $( compgen -W "4242" -- $cur ) )
+	    return 0
+	    ;;
+    esac
+}
+complete -F _clientJ2T3 ./clientJ2T3
+complete -F _clientJ2T3 ./debug_client.sh
