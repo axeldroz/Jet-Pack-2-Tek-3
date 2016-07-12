@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 16:01:34 2016 drozdz_b
-** Last update Tue Jul 12 17:32:48 2016 drozdz_b
+** Last update Tue Jul 12 21:41:40 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -43,7 +43,7 @@ int		graph_add_texture_map(t_map *map, SDL_Renderer *renderer,
   texture = IMG_LoadTexture(renderer, path);
   if (texture == NULL)
     {
-      fprintf(stderr, "Fail IMG_LoadTexture() : %s", SDL_GetError());
+      fprintf(stderr, "Fail IMG_LoadTexture() : %s\n", SDL_GetError());
       return (-1);
     }
   map_add(map, (void *)key, texture);

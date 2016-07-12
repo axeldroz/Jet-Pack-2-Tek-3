@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:38:48 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 20:00:24 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 22:46:02 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -78,7 +78,7 @@ static int	init_game(t_server *s, struct timeval *lasttime)
   return (0);
 }
 
-static int		game_loop(t_server *s)
+static int		game_loop(t_server *s, fd_set *writefds)
 {
   int			ret;
   static struct timeval	lasttime;
@@ -101,34 +101,35 @@ static int		game_loop(t_server *s)
       end_game(s);
       s->game.n_ready = 0;
     }
+  *writefds = s->writefds;
   gettimeofday(&lasttime, NULL);
   return (0);
 }
 
 int			select_loop(t_server *s)
 {
-  fd_set		readfds;
-  fd_set		writefds;
+  fd_set		rfds;
+  fd_set		wfds;
   struct timeval	tv;
   int			rs;
 
   while (s->run)
     {
-      readfds = s->readfds;
-      writefds = s->writefds;
-      tv = (struct timeval){0, 33333};
-      if (game_loop(s) == -1 ||
-	  (rs = select(s->max_fd + 1, &readfds, &writefds, NULL, &tv)) == -1)
+      rfds = s->readfds;
+      wfds = s->writefds;
+      tv = (struct timeval){0, 24000};
+      if (game_loop(s, &wfds) == -1 ||
+	  (rs = select(s->max_fd + 1, &rfds, &wfds, NULL, &tv)) == -1)
 	return (-1);
       if (rs == 0)
 	continue;
-      if (FD_ISSET(s->net->socket, &readfds))
+      if (FD_ISSET(s->net->socket, &rfds))
 	{
 	  if (add_client(s) == -1)
 	    return (-1);
 	  continue ;
 	}
-      if (players_loop(s, &readfds, &writefds) == -1)
+      if (usleep(tv.tv_usec) == -1 || players_loop(s, &rfds, &wfds) == -1)
 	return (-1);
     }
   return (0);

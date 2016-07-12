@@ -16,7 +16,7 @@
 typedef struct s_descr
 {
     t_game_map  *map;
-    t_map     *players;  
+    t_map     *players;
     int          id;
     t_tcpnetc    *cli;
     t_map       *commands;

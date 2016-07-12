@@ -5,7 +5,7 @@
 ## Login   <gigoma_l@epitech.net>
 ##
 ## Started on  Thu Jul  7 09:25:01 2016 Loïc GIGOMAS
-## Last update Tue Jul 12 21:36:26 2016 drozdz_b
+## Last update Tue Jul 12 21:43:28 2016 Loïc GIGOMAS
 ##
 
 BIN_SERVER	= serverJ2T3
@@ -42,6 +42,7 @@ SRC_CLIENT	= main.c 	\
 		  graphic2.c	\
 		  graphic3.c	\
 		  graphic4.c	\
+		  client_net.c	\
 		  ../pair.c	\
 		  ../vector_accessors.c	\
 		  ../vector_modifiers.c	\
