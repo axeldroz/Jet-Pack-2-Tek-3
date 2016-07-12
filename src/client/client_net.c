@@ -2,76 +2,37 @@
 #include "tcpnetc.h"
 #include "thread.h"
 
-t_cth_ret net_routine(t_cth_params)
+#include "select_loop.h"
+
+void        *fct_stop(void *)
 {
+    return ((void *)1)
+}
+
+void        *fct_write(void *)
+{
+    return ((void *)1)
+}
+
+void        *fct_read(void *)
+{
+    return ((void *)1)
+}
+
+t_cth_ret net_routine(t_cth_params params)
+{
+    t_descr     descr;
+    t_func      f2;
+    t_fun       f1;
+    t_fun       f3;
     
+    f1.fct = &fct_stop;
+    f1.params = NULL;
+    f2.fct = &fct_read;
+    f2.params = params;
+    f3.fct = &fct_write;
+    f3.params = params;
+    descr = (t_descr)(params);
+    select_loop(params, f1, f2, f3);
     return (NULL);
-}
-
-/*void  get_map(t_tcpnetc *cli)
-{
-    t_splited split;
-    
-    
-    split = new(t_splited, )
-}*/
-
-
-
-
-
-static int	player_read(t_descr *c, t_map *fct)
-{
-  int		r;
-  char		*str;
-  t_splited	*cmp;
-  int		first;
-
-  str = NULL;
-  first = 1;
-  while (c && (r = get_next_line(&c->gnl, (first ? c->fd : -1), &str)) < 2)
-    {
-      if (r == 0 || r == 1)
-	{
-	  if ((cmp = new(t_splited, str)) == NULL)
-	    return(-1);
-	  r = MGET(t_command, fct,
-		   VGETP(char *, cmp->words, 0))(cmp, c, s);
-	  free(str);
-	  delete(cmp);
-	  if (r == -1)
-	    return (-1);
-	}
-      first = 0;
-    }
-  return (r >= 3 ? -1 : 0);
-}
-
-int			select_loop(t_descr *s)
-{
-  fd_set		readfds;
-  fd_set		writefds;
-  struct timeval	tv;
-  int			rs;
-
-  while (s->run)
-    {
-      readfds = s->readfds;
-      writefds = s->writefds;
-      tv = (struct timeval){0, 33333};
-      if (game_loop(s) == -1 ||
-	  (rs = select(s->cli->socket + 1, &readfds, &writefds, NULL, &tv)) == -1)
-	return (-1);
-      if (rs == 0)
-	continue;
-      if (FD_ISSET(s->cli->socket, &readfds))
-	{
-	  if (add_client(s) == -1)
-	    return (-1);
-	  continue ;
-	}
-      if (players_loop(s, &readfds, &writefds) == -1)
-	return (-1);
-    }
-  return (0);
 }
