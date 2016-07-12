@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:40:15 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 21:47:17 2016 Loïc GIGOMAS
+** Last update Tue Jul 12 22:32:41 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -97,9 +97,6 @@ int	iov_send(t_server *s, t_player *p)
 {
   int	i;
 
-  printf("Player %d => Send %d lines\n", p->fd, p->iovcnt);
-  for (i = 0; i < p->iovcnt; ++i)
-    printf("  -> \"%s\"\n", p->io[i].iov_base);
   if (writev(p->fd, p->io, p->iovcnt) == -1)
     return (-1);
   for (i = 0; i < p->iovcnt; ++i)
