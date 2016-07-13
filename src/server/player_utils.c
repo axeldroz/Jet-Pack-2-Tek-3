@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:37:30 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 15:48:17 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 15:52:18 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -95,8 +95,6 @@ int			calc_states(t_server *s, struct timeval *last)
     {
       p = tmp->second;
       update_pos(s, p, time);
-      if (p->entity->x >= s->game.map->w)
-	return (GAME_FINISHED);
       if (check_colliders(s, p, buff, &offset) == GAME_ERROR)
 	return (GAME_ERROR);
       snprintf(&buff[offset], GLBUFF - offset, "PLAYER %d %f %f %d\n",
@@ -104,5 +102,7 @@ int			calc_states(t_server *s, struct timeval *last)
       offset = strlen(buff);
     }
   send_to_all(s, buff);
+  if (p->entity->x >= s->game.map->w)
+    return (GAME_FINISHED);
   return (GAME_RUNNING);
 }
