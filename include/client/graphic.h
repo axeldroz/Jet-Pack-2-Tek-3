@@ -60,6 +60,16 @@ typedef struct	s_graph_item
   int		zindex;
 }		t_graph_item;
 
+typedef struct s_cond
+{
+  float i;
+  float i2;
+  float j;
+  float j2;
+  float w;
+  float h;
+}           t_cond;
+
 /*
 ** graphic.c
 */

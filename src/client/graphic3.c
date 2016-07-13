@@ -12,26 +12,37 @@
 #include "foreach.h"
 #include "client/client_net.h"
 
+void            graph_disp_all(t_window *win, t_descr *descr)
+{
+  t_graph_item *player;
+  
+  player = MGET(t_graph_item*, descr->players, descr->id);
+  graph_display_map(win, map, player);
+
+  graph_display_player(win, player);
+}
+
 void		graph_game_loop(t_window *win, t_descr *descr)
 {
   SDL_Event	ev;
 
-  SDL_RenderClear(win->renderer);
-  /* graph_display_player(win, player); */
   while (descr->run)
     {
       SDL_RenderClear(win->renderer);
-      /* graph_display_map(win, map, player); */
-      /* graph_display_player(win, player); */
+      graph_disp_all(win, descr);
       SDL_RenderPresent(win->renderer);
       if (SDL_PollEvent(&ev))
-	{
-	  if (ev.type == SDL_QUIT)
-	    {
-	      descr->run = 0;
-	      break;
-	    }
-	}
+    	{
+        if (ev.type == SDL_QUIT)
+           descr->run = 0;
+        else
+        {
+          if(ev.type != SDL_KEYDOWN && ev.key.keysym.sym==SDLK_SPACE)
+             write_iov(descr, "FIRE 1");         
+          if(ev.type != SDL_KEYUP && ev.key.keysym.sym==SDLK_SPACE)
+            write_iov(descr, "FIRE 0");          
+	      }
+      }
     }
 }
 

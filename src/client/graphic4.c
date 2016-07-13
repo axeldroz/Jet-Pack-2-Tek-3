@@ -37,50 +37,40 @@ void    display_texture(t_window *win, SDL_Texture *texture, float x, float y)
     SDL_RenderCopy(win->renderer, texture, NULL, &rect);
 }
 
-t_vector2d		calc_scroll_map_h(t_graph_item *player, t_window *win)
+void graph_disp_others(t_descr *descr, t_cond *cond)
 {
-  t_vector2d a;
-    a.x = player->pos.y - player->view.y / 2;
-    a.y = player->pos.y + player->view.y / 2;
-
-  return (a);
-}
-
-t_vector2d		calc_scroll_map_w(t_graph_item *player, t_window *win)
-{
-  t_vector2d a;
-
-
-    a.x = player->pos.x - player->view.x / 4;
-    a.y = player->pos.x + player->view.x / 4 * 3;
-  return (a);
+  SDL_Texture* texture;
+  
+  texture = MGET(SDL_Texture*, descr->obj, 'p');
+  FOREACH(t_pair *, p, descr->players)
+  {
+    if (p->key != descr->id && p->value->pos.x < cond.w
+        && p->value->pos.x >= cond.i2 && p->value->pos.y < cond.h
+        && p->value->pos.y >= cond.j2)
+          display_texture(descr->win, texture, cond.i - cond.w, cond.h - cond.j);
+  }
 }
 
 void graph_display_map(t_window *win, t_game_map *map,
 		       t_graph_item *player, t_vector *p)
 {
-    float  i;
-    float  j;
-    t_vector2d v1;
-    t_vector2d v2;
-    t_graph_item item;
-
+    t_cond cond;
     SDL_Texture* texture;
 
-    v1 = calc_scroll_map_h(player, win);
-    v2 = calc_scroll_map_w(player, win);
-    i = v2.x;
-    j = v1.x;
-    while (j < v1.y)
+    cond.i = player->pos.x - player->view.x / 4;
+    cond.i2 = player->pos.x - player->view.x / 4;
+    cond.w = player->pos.x + player->view.x / 4 * 3;
+    cond.j = player->pos.y - player->view.y / 2;
+    cond.j2 = player->pos.y - player->view.y / 2;
+    cond.h = player->pos.y + player->view.y / 2;    
+    while (j < w)
     {
-        while (i < v2.y)
-        {
+        while (i < h)
+        {                  
             texture = VGETP(SDL_Texture*, map->cells, (int)j * map->w + (int)i);
-            //printf("texture %p, i = %lu, j = %lu case = %lu\n", texture, i, j, j* w + i);
             if (texture != (void *)-1 && texture != NULL)
-            {
-                display_texture(win, texture, i - v2.x, v1.y - j);
-            }
+                display_texture(win, texture, cond.i - cond.w, cond.h - cond.j);
+            graph_disp_others(descr, &cond);
             ++i;
         }
         i = 0;
