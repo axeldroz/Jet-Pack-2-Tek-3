@@ -5,20 +5,25 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:39:49 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 10:48:14 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 15:49:36 2016 Loïc GIGOMAS
 */
 
+#include <math.h>
 #include "server/player.h"
 
-int	update_pos(t_server *s, t_player *p, double time)
+void	update_pos(t_server *s, t_player *p, double time)
 {
   p->entity->speed_x = p->entity->accel_x;
-  p->entity->speed_y -= p->entity->accel_y * 2.0 *
-    (p->fire ? 1.0 : -1.0) / p->entity->weight * time;
-  if (p->entity->speed_y <= -p->entity->speed_max)
-    p->entity->speed_y = -p->entity->speed_max;
-  if (p->entity->speed_y >= -p->entity->accel_y)
-    p->entity->speed_y = -p->entity->accel_y;
+  p->entity->speed_y -= p->entity->accel_y * 2.0
+    * (p->fire ? 1.0 : -1.0) / p->entity->weight * time;
+  if (p->entity->speed_y <= (p->entity->accel_y < 0 ? -p->entity->speed_max
+			     : -p->entity->accel_y))
+    p->entity->speed_y = (p->entity->accel_y < 0 ? -p->entity->speed_max
+			  : -p->entity->accel_y);
+  if (p->entity->speed_y >= (p->entity->accel_y < 0 ? -p->entity->accel_y
+			     : p->entity->speed_max))
+    p->entity->speed_y = (p->entity->accel_y < 0 ? -p->entity->accel_y
+			  : p->entity->speed_max);
   if (p->entity->y >= 0 && p->entity->y <= s->game.map->h - 1)
     p->entity->y += p->entity->speed_y * time;
   if (p->entity->y <= 0)
@@ -32,9 +37,6 @@ int	update_pos(t_server *s, t_player *p, double time)
       p->entity->y = s->game.map->h - 1;
     }
   p->entity->x += p->entity->speed_x * time;
-  if (p->entity->x >= s->game.map->w)
-    return (GAME_FINISHED);
-  return (GAME_RUNNING);
 }
 
 int	check_colliders(t_server *s, t_player *p, char *b, size_t *o)

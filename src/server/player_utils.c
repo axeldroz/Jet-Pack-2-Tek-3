@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:37:30 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 10:48:31 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 15:48:17 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -94,7 +94,8 @@ int			calc_states(t_server *s, struct timeval *last)
   FOREACH(t_pair *, tmp, s->clients)
     {
       p = tmp->second;
-      if (update_pos(s, p, time) == GAME_FINISHED)
+      update_pos(s, p, time);
+      if (p->entity->x >= s->game.map->w)
 	return (GAME_FINISHED);
       if (check_colliders(s, p, buff, &offset) == GAME_ERROR)
 	return (GAME_ERROR);

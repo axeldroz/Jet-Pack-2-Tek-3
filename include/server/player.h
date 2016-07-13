@@ -56,7 +56,7 @@ int	iov_send(t_server *s, t_player *p);
 int	send_states(t_server *s);
 int	calc_states(t_server *s, struct timeval *lasttime);
 int	send_to_all(t_server *s, char *str);
-int	update_pos(t_server *s, t_player *p, double time);
+void	update_pos(t_server *s, t_player *p, double time);
 int	check_colliders(t_server *s, t_player *p, char *b, size_t *o);
 
 int	add_client(t_server *s);

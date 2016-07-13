@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Fri Jul  8 18:52:38 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 16:05:56 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 15:43:50 2016 Loïc GIGOMAS
 */
 
 #include <math.h>
@@ -17,7 +17,7 @@ double	speed_max(t_entity *t)
 
   bsq = ((4.0 * t->accel_y * OBJ_DIAMETER) / (3.0 * DRAG_COEFF))
     * ((OBJ_DENS - FLUID_DENS) / FLUID_DENS);
-  return (sqrt((bsq < 0 ? -bsq : bsq)) / 20.0);
+  return ((sqrt((bsq < 0 ? -bsq : bsq)) / 20.0));
 }
 
 t_entity	*t_entity_new(t_entity_init var)
