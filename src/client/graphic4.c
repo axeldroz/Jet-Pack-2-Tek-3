@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 17:33:12 2016 drozdz_b
-** Last update Wed Jul 13 13:38:14 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 13:46:02 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -73,10 +73,10 @@ void graph_display_map(t_descr *descr, t_game_map *map,
             if (texture != (void *)-1 && texture != NULL)
                 display_texture(&descr->win, texture,
 				cond.i - cond.w, cond.h - cond.j);
-            graph_disp_others(descr, &cond);
             ++cond.i;
         }
         cond.i = 0;
         ++cond.j;
     }
+    graph_disp_others(descr, &cond);
 }

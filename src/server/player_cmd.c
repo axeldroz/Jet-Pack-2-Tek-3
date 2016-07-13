@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:37:52 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 12:02:06 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 13:46:35 2016 Loïc GIGOMAS
 */
 
 #include <stdlib.h>
@@ -19,7 +19,6 @@ int	com_id(NSD t_splited *str, t_player *p, t_server *s)
   char	buff[16];
 
   sprintf(buff, "ID %d\n", p->fd);
-  printf("[%d]: ID\n", p->fd);
   if (write_iov(s, p, buff) == -1)
     return (-1);
   if (!IS_READY(p) && (p->ready |= RCV_ID) && IS_READY(p))
@@ -33,7 +32,6 @@ int	com_map(NSD t_splited *str, t_player *p, t_server *s)
 
   if ((buff = malloc(30 + s->game.map->str_size)) == NULL)
     return (-1);
-  printf("[%d]: MAP\n", p->fd);
   sprintf(buff, "MAP %lu %lu %s\n", s->game.map->w, s->game.map->h,
 	  s->game.map->full_str);
   if (write_iov(s, p, buff) == -1)
@@ -49,7 +47,6 @@ int	com_map(NSD t_splited *str, t_player *p, t_server *s)
 
 int	com_ready(NSD t_splited *str, t_player *p, t_server *s)
 {
-  printf("[%d]: READY\n", p->fd);
   if (!IS_READY(p) && (p->ready |= RCV_READY) && IS_READY(p))
     ++s->game.n_ready;
   return (0);
@@ -59,7 +56,6 @@ int	com_fire(t_splited *str, t_player *p, NSD t_server *s)
 {
   char	*word;
 
-  printf("[%d]: FIRE\n", p->fd);
   if (str->words->size < 2 || (word = VGETP(char *, str->words, 1)) == NULL)
     return (0);
   p->fire = atoi(word);
