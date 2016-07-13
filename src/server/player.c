@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:40:15 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 22:32:41 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 10:45:50 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -27,7 +27,6 @@ void		pla_del(void *ptr)
   for (i = 0; i < p->iovcnt; ++i)
     free(p->io[i].iov_base);
 }
-
 
 t_player	*t_player_new(t_player_init var)
 {

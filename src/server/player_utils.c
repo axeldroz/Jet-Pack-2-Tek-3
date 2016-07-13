@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:37:30 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 22:46:16 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 10:48:31 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -86,7 +86,6 @@ int			calc_states(t_server *s, struct timeval *last)
   size_t		offset;
   double		time;
   t_player		*p;
-
 
   gettimeofday(&now, NULL);
   time = ((now.tv_sec - last->tv_sec) + 1e-6 * (now.tv_usec - last->tv_usec));

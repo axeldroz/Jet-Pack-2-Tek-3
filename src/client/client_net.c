@@ -53,6 +53,7 @@ t_cth_ret net_routine(t_cth_params params)
     t_func      f1;
     t_func      f3;
 
+    add_commands(params);
     f1.fct = &fct_stop;
     f1.params = params;
     f2.fct = &fct_read;

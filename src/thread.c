@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Thu Jul  7 15:52:52 2016 Loïc GIGOMAS
-** Last update Fri Jul  8 11:40:26 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 10:44:43 2016 Loïc GIGOMAS
 */
 
 #include "thread.h"
@@ -18,7 +18,6 @@ void		thr_del(void *ptr)
     return ;
   t = ptr;
 #ifdef __linux__
-  /* pthread_cancel(t->thread); */
   pthread_join(t->thread, t->ret);
 #elif _WIN32
   WaitForSingleObject(t->thread.handle, INFINITE);

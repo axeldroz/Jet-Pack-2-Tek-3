@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:38:48 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 00:34:38 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 10:49:44 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -32,7 +32,7 @@ static int	player_read(t_player *c, t_server *s)
       if (r == 0 || r == 1)
 	{
 	  if ((cmp = new(t_splited, str)) == NULL)
-	    return(-1);
+	    return (-1);
 	  r = MGET(t_command, s->commands,
 		   VGETP(char *, cmp->words, 0))(cmp, c, s);
 	  free(str);
@@ -73,7 +73,8 @@ static int	init_game(t_server *s, struct timeval *lasttime)
   s->game.map->cells->size = 0;
   i = 0;
   while (i < s->game.origin->cells->size)
-    vector_push_back(s->game.map->cells, vector_at(s->game.origin->cells, i++));
+    vector_push_back(s->game.map->cells,
+		     vector_at(s->game.origin->cells, i++));
   send_to_all(s, "START\n");
   return (0);
 }
