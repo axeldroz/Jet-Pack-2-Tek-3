@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 17:33:12 2016 drozdz_b
-** Last update Wed Jul 13 22:16:00 2016 drozdz_b
+** Last update Wed Jul 13 23:05:06 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -51,19 +51,18 @@ void	graph_disp_others(t_descr *descr, t_cond *cond)
 }
 
 void			graph_display_map(t_descr *descr, t_game_map *map,
-					  t_graph_item *player, t_map *p)
+					  t_graph_item *player)
 {
   t_cond		cond;
   SDL_Texture		*texture;
 
-  (void)p;
   cond.i = 0;
   cond.i2 = player->pos.x - player->view.x / 4.0;
   cond.w = player->pos.x + player->view.x / 4.0 * 3.0;
   cond.j = 0;
   cond.j2 = player->pos.y - player->view.y / 2.0;
   cond.h = player->pos.y + player->view.y / 2.0;
-  while (cond.j < map->h - 1)
+  while (cond.j < map->h)
     {
       while (cond.i < map->w)
         {
@@ -71,10 +70,11 @@ void			graph_display_map(t_descr *descr, t_game_map *map,
 			  (cond.j) * map->w + cond.i);
 	  if (texture != (void *)-1 && texture != NULL)
 	    display_texture2(&descr->win, texture,
-			     cond.i - cond.i2,  cond.j + cond.j2 + player->view.y / 2  - 1);
+			     cond.i - cond.i2,  cond.j + cond.j2
+			     + player->view.y / 2.0  - 1);
 	  ++cond.i;
         }
-      cond.i = cond.i2;
+      cond.i = 0;
       ++cond.j;
     }
   graph_disp_others(descr, &cond);

@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Wed Jul 13 17:15:19 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 17:15:19 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 22:50:11 2016 Loïc GIGOMAS
 */
 
 #include "client/client_net.h"
@@ -76,13 +76,11 @@ static int	com_finish(t_splited *str, t_descr *descr)
 
 t_cth_ret	net_routine(t_cth_params params)
 {
-  t_descr	*descr;
   t_func	f2;
   t_func	f1;
   t_func	f3;
 
-  descr = (t_descr *)(params);
-  descr->id = -1;
+  ((t_descr *)params)->id = -1;
   if (add_commands(params, &com_finish) == 0)
     {
       f1.fct = &fct_stop;
@@ -91,15 +89,15 @@ t_cth_ret	net_routine(t_cth_params params)
       f2.params = params;
       f3.fct = &fct_write;
       f3.params = params;
-      FD_ZERO(&descr->readfd);
-      FD_ZERO(&descr->writefd);
-      FD_SET(descr->cli->socket, &descr->readfd);
-      write_iov(descr, "ID\nMAP\n");
-      select_loop(descr, &f1, &f2, &f3);
+      FD_ZERO(&((t_descr *)params)->readfd);
+      FD_ZERO(&((t_descr *)params)->writefd);
+      FD_SET(((t_descr *)params)->cli->socket, &((t_descr *)params)->readfd);
+      write_iov(((t_descr *)params), "ID\nMAP\n");
+      select_loop(((t_descr *)params), &f1, &f2, &f3);
     }
-  if (descr->run && (descr->id == -1 ||
-    descr->map->cells->size == 0))
-    cmutex_unlock(&descr->lock);
-  descr->run = 0;
+  if (((t_descr *)params)->run && (((t_descr *)params)->id == -1 ||
+    ((t_descr *)params)->map->cells->size == 0))
+    cmutex_unlock(&((t_descr *)params)->lock);
+  ((t_descr *)params)->run = 0;
   return (NULL);
 }

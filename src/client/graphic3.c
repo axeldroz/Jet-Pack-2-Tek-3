@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 18:23:52 2016 drozdz_b
-** Last update Wed Jul 13 22:15:18 2016 drozdz_b
+** Last update Wed Jul 13 22:51:43 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -19,7 +19,7 @@ void		graph_disp_all(t_window *win, t_descr *descr)
   if ((player = MGET(t_graph_item*, descr->players,
 		     (void *)((long)descr->id))) == NULL)
     return ;
-  graph_display_map(descr, descr->map, player, descr->players);
+  graph_display_map(descr, descr->map, player);
   graph_display_player(win, player);
 }
 
@@ -49,7 +49,7 @@ void		graph_game_loop(t_window *win, t_descr *descr)
 	}
       usleep(1000);
     }
- 
+
 }
 
 void		graph_display_player(t_window *win, t_graph_item *item)

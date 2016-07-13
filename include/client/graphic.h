@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 10:09:36 2016 drozdz_b
-** Last update Wed Jul 13 16:51:44 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 22:51:31 2016 Loïc GIGOMAS
 */
 
 #ifndef GRAPHIC_H_
@@ -95,7 +95,7 @@ void	graph_game_loop(t_window *win, t_descr *descr);
 void	graph_display_player(t_window *win, t_graph_item *item);
 
 void	graph_display_map(t_descr *descr, t_game_map *map,
-			  t_graph_item *player, t_map *other);
+			  t_graph_item *player);
 
 # include "client/client_net.h"
 
