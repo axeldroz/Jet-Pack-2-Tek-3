@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 10:10:09 2016 drozdz_b
-** Last update Wed Jul 13 17:16:06 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 22:16:35 2016 drozdz_b
 */
 
 #include "client/graphic.h"
@@ -52,7 +52,7 @@ int	graph_create_window(t_window *win, SDL_Rect rect, int size_tile)
       fprintf(stderr, "Fail SDL_CreateRenderer() : %s\n", SDL_GetError());
       return (-2);
     }
-  SDL_SetRenderDrawColor(win->renderer, 255, 0, 0, 255);
+  SDL_SetRenderDrawColor(win->renderer, 255, 236, 198, 255);
   return (0);
 }
 

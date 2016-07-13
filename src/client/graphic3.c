@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 18:23:52 2016 drozdz_b
-** Last update Wed Jul 13 17:17:55 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 22:15:18 2016 drozdz_b
 */
 
 #include "client/graphic.h"
@@ -43,11 +43,11 @@ void		graph_game_loop(t_window *win, t_descr *descr)
 	  if (ev.type == SDL_KEYDOWN && ev.key.keysym.sym == SDLK_SPACE
 	      && !fire && ((fire = 1) == 1))
 	    write_iov(descr, "FIRE 1");
-	 if (ev.type == SDL_KEYUP && ev.key.keysym.sym == SDLK_SPACE
+	  if (ev.type == SDL_KEYUP && ev.key.keysym.sym == SDLK_SPACE
 	      && fire && ((fire = 0) == 0))
 	    write_iov(descr, "FIRE 0");
 	}
-        usleep(10000);
+      usleep(1000);
     }
  
 }
@@ -64,6 +64,5 @@ void		graph_display_player(t_window *win, t_graph_item *item)
   rect.y = y;
   rect.w = item->size.x;
   rect.h = item->size.y;
-  //printf("Player : x=%f y=%f\n", item->pos.x, item->pos.y);
   SDL_RenderCopy(win->renderer, item->texture, NULL, &rect);
 }

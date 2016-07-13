@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 17:33:12 2016 drozdz_b
-** Last update Wed Jul 13 17:18:27 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 22:16:00 2016 drozdz_b
 */
 
 #include "client/graphic.h"
@@ -20,6 +20,18 @@ void		display_texture(t_window *win, SDL_Texture *texture,
   rect.h = 64;
   rect.x = x * 64;
   rect.y = win->size_screen.y - y * 64 - 64;
+  SDL_RenderCopy(win->renderer, texture, NULL, &rect);
+}
+
+void		display_texture2(t_window *win, SDL_Texture *texture,
+				float x, float y)
+{
+  SDL_Rect	rect;
+
+  rect.w = 64;
+  rect.h = 64;
+  rect.x = x * 64;
+  rect.y = y * 64 - 64;
   SDL_RenderCopy(win->renderer, texture, NULL, &rect);
 }
 
@@ -45,24 +57,24 @@ void			graph_display_map(t_descr *descr, t_game_map *map,
   SDL_Texture		*texture;
 
   (void)p;
-  cond.i = player->pos.x - player->view.x / 4;
-  cond.i2 = player->pos.x - player->view.x / 4;
-  cond.w = player->pos.x + player->view.x / 4 * 3;
-  cond.j = player->pos.y - player->view.y / 2;
-  cond.j2 = player->pos.y - player->view.y / 2;
-  cond.h = player->pos.y + player->view.y / 2;
-  while (cond.j < cond.w)
+  cond.i = 0;
+  cond.i2 = player->pos.x - player->view.x / 4.0;
+  cond.w = player->pos.x + player->view.x / 4.0 * 3.0;
+  cond.j = 0;
+  cond.j2 = player->pos.y - player->view.y / 2.0;
+  cond.h = player->pos.y + player->view.y / 2.0;
+  while (cond.j < map->h - 1)
     {
-      while (cond.i < cond.h)
+      while (cond.i < map->w)
         {
 	  texture = VGETP(SDL_Texture*, map->cells,
-			  cond.j * map->w + (int)cond.i);
+			  (cond.j) * map->w + cond.i);
 	  if (texture != (void *)-1 && texture != NULL)
-	    display_texture(&descr->win, texture,
-			    cond.j - cond.j2 -1, cond.i - cond.i2);
+	    display_texture2(&descr->win, texture,
+			     cond.i - cond.i2,  cond.j + cond.j2 + player->view.y / 2  - 1);
 	  ++cond.i;
         }
-      cond.i = 0;
+      cond.i = cond.i2;
       ++cond.j;
     }
   graph_disp_others(descr, &cond);

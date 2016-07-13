@@ -25,7 +25,7 @@ t_map	*graph_create_decor(SDL_Renderer *renderer)
   graph_add_texture_map(map, renderer, (long)'c',
 			"sprites/powerup_banana.png");
   graph_add_texture_map(map, renderer, (long)'p',
-			"sprites/rocketmouse_run04@2x.png");
+			"sprites/RocketMouse_1024.png");
   map_add(map, (void*)((long)'_'), (void *)-1);
   return (map);
 }
