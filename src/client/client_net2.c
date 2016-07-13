@@ -23,6 +23,7 @@ int		write_iov(t_descr *s, char *msg)
   s->io[s->iovcnt].iov_len = len;
   ++s->iovcnt;
   FD_SET(s->cli->socket, &s->writefd);
+  printf("Attempt to send \"%s\"\n", msg);
   return (0);
 }
 
@@ -30,8 +31,10 @@ int	iov_send(t_descr *s)
 {
   int	i;
 
+  printf("Sending %d messages...\n", s->iovcnt);
   if (writev(s->cli->socket, s->io, s->iovcnt) == -1)
     return (-1);
+  printf("Sent!\n");
   for (i = 0; i < s->iovcnt; ++i)
     free(s->io[i].iov_base);
   s->iovcnt = 0;

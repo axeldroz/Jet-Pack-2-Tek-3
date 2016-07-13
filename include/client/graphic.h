@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 10:09:36 2016 drozdz_b
-** Last update Tue Jul 12 23:29:08 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 09:37:11 2016 Loïc GIGOMAS
 */
 
 #ifndef GRAPHIC_H_
@@ -26,6 +26,8 @@
 #define TILE_SIZE 64
 #define MAP_HEIGH 15
 #define MAP_WIDTH 25
+
+typedef struct s_descr	t_descr;
 
 typedef struct	s_vect_int
 {
@@ -85,10 +87,12 @@ void	graph_display(SDL_Renderer *renderer, t_graph_item *item);
 /*
 ** graphic3.c
 */
-void	graph_game_loop(t_window *win, t_graph_item *player);
+void	graph_game_loop(t_window *win, t_descr *descr);
 void	graph_display_player(t_window *win, t_graph_item *item);
 
-void	graph_display_map(t_window *win, t_game_map *map, t_graph_item *player);
+void	graph_display_map(t_window *win, t_game_map *map,
+			  t_graph_item *player, t_vector *other);
 
+# include "client/client_net.h"
 
 #endif

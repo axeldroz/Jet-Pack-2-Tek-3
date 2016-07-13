@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 18:23:52 2016 drozdz_b
-** Last update Tue Jul 12 21:39:59 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 09:57:00 2016 drozdz_b
 */
 
 #include "client/graphic.h"
@@ -15,24 +15,24 @@
 void		graph_game_loop(t_window *win, t_descr *descr)
 {
   SDL_Event	ev;
-  t_game_map *map;
-  t_map *obj;
-  t_graph_item *player;
 
-  map = new(t_game_map);
-  printf("ret = %d\n", map_from_file(map, "map/1.map", obj));
-  printf("map h = %lu, w = %lu\n", map->h, map->w);
-  FOREACH(SDL_Texture *, t, map->cells)
-    printf("obj : val=%p\n", t);
   SDL_RenderClear(win->renderer);
-  win->size_map.x = map->w;
-  win->size_map.y = map->h;
-  graph_display_player(win, player);
-  graph_item_set_pos(player, player->pos.x, player->pos.y - 0.5F);
-  SDL_RenderClear(win->renderer);
-  graph_display_map(win, map, player);
-  graph_display_player(win, player);
-  SDL_RenderPresent(win->renderer);
+  /* graph_display_player(win, player); */
+  while (descr->run)
+    {
+      SDL_RenderClear(win->renderer);
+      /* graph_display_map(win, map, player); */
+      /* graph_display_player(win, player); */
+      SDL_RenderPresent(win->renderer);
+      if (SDL_PollEvent(&ev))
+	{
+	  if (ev.type == SDL_QUIT)
+	    {
+	      descr->run = 0;
+	      break;
+	    }
+	}
+    }
 }
 
 float		graph_calc_scroll(t_graph_item *player, t_window *win)

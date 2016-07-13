@@ -6,15 +6,15 @@
 
 void        *fct_stop(void *params)
 {
-    return ((void *)0);
+  return ((void *)(((t_descr *)params)->run == 0 ? 1L : 0L));
 }
 
 void        *fct_write(void *params)
 {
-    t_descr     *descr;
+  t_descr     *descr;
 
-    descr = (t_descr *)(params);
-    return ((void *)(long)iov_send(descr));
+  descr = (t_descr *)(params);
+  return ((void *)(long)iov_send(descr));
 }
 
 void        *fct_read(void *params)

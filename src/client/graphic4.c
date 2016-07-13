@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 17:33:12 2016 drozdz_b
-** Last update Tue Jul 12 21:41:32 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 09:31:09 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -56,7 +56,8 @@ t_vector2d		calc_scroll_map_w(t_graph_item *player, t_window *win)
   return (a);
 }
 
-void graph_display_map(t_window *win, t_game_map *map, t_graph_item *player)
+void graph_display_map(t_window *win, t_game_map *map,
+		       t_graph_item *player, t_vector *p)
 {
     float  i;
     float  j;

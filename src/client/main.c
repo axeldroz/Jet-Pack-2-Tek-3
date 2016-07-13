@@ -11,8 +11,7 @@
 
 int		main(int ac, char **av)
 {
-  t_descr	des;
-  t_graph_item	*player;
+  t_descr	*des;
   SDL_Rect	rect;
   int		ret;
   t_tcpnetc *cli;
@@ -29,31 +28,32 @@ int		main(int ac, char **av)
       || opt_getvar(opt, 'p', &port) != OPT_NOERR
       || opt_getvar(opt, 'h', &host) != OPT_NOERR)
         return (84);
-  if (!(cli = new(t_tcpnetc, host, port)))
+  if (!(des = malloc(sizeof(*des))) || !(cli = new(t_tcpnetc, host, port)))
     return (84);;
- 
-  memset(&des, 0, sizeof(des));
+  memset(des, 0, sizeof(*des));
   graph_init();
-  des.obj = graph_create_decor(win->renderer);
-  ret = graph_create_window(&des.win, (SDL_Rect)
+  ret = graph_create_window(&des->win, (SDL_Rect)
 			    {MAP_WIDTH, MAP_HEIGH, SCREEN_WIDTH, SCREEN_HEIGHT}, TILE_SIZE);
+  des->obj = graph_create_decor(des->win.renderer);
   rect.x = 0;
   rect.y = 0;
   rect.w = 64;
   rect.h = 64;
-  des.cli = cli;
-  th = new(t_thread, net_routine, &des);
+  des->cli = cli;
+  /* th = new(t_thread, net_routine, des); */
+  des->run = 1;
   if(ret >= 0)
     {
-      graph_game_loop(&des.win, des);
-      SDL_DestroyTexture(player->texture);
-      SDL_DestroyRenderer(des.win.renderer);
-      SDL_DestroyWindow(des.win.window);
+      graph_game_loop(&des->win, des);
+      SDL_DestroyRenderer(&des->win.renderer);
+      SDL_DestroyWindow(&des->win.window);
+      delete(th);
     }
     else
     {
       fprintf(stderr,"Erreur de création de la fenêtre: %s\n", SDL_GetError());
     }
+  free(des);
   SDL_Quit();
   return 0;
 }
