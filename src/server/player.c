@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:40:15 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 10:45:50 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 23:17:37 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -96,10 +96,18 @@ int	iov_send(t_server *s, t_player *p)
 {
   int	i;
 
+#ifdef __linux__
   if (writev(p->fd, p->io, p->iovcnt) == -1)
     return (-1);
+#endif
   for (i = 0; i < p->iovcnt; ++i)
-    free(p->io[i].iov_base);
+    {
+#ifdef _WIN32
+      if (write(p->fd, p->io[i].iov_base, p->io[i].iov_len) == -1)
+	return (-1);
+#endif
+      free(p->io[i].iov_base);
+    }
   p->iovcnt = 0;
   FD_CLR(p->fd, &s->writefds);
   return (0);

@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Wed Jul 13 17:11:37 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 17:11:50 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 23:26:02 2016 Loïc GIGOMAS
 */
 
 #include <string.h>
@@ -41,10 +41,18 @@ int	iov_send(t_descr *s)
 {
   int	i;
 
+#ifdef __linux__
   if (writev(s->cli->socket, s->io, s->iovcnt) == -1)
     return (-1);
+#endif
   for (i = 0; i < s->iovcnt; ++i)
-    free(s->io[i].iov_base);
+    {
+#ifdef _WIN32
+      if (write(s->cli->socket, s->io[i].iov_base, s->io[i].iov_len) == -1)
+	return (-1);
+      free(s->io[i].iov_base);
+#endif
+    }
   s->iovcnt = 0;
   FD_CLR(s->cli->socket, &s->writefd);
   return (0);

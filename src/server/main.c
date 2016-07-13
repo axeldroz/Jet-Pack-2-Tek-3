@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:38:01 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 16:41:37 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 23:30:57 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -63,9 +63,9 @@ static int	get_args(t_server **s, int ac, char **av)
   float		gravity;
 
   if ((opt = new(t_getopt)) == NULL ||
-      opt_register(opt, 'p', INT, MANDATORY) != OPT_NOERR ||
-      opt_register(opt, 'g', FLOAT, MANDATORY) != OPT_NOERR ||
-      opt_register(opt, 'm', PCHAR, MANDATORY) != OPT_NOERR)
+      opt_register(opt, 'p', eINT, MANDATORY) != OPT_NOERR ||
+      opt_register(opt, 'g', eFLOAT, MANDATORY) != OPT_NOERR ||
+      opt_register(opt, 'm', ePCHAR, MANDATORY) != OPT_NOERR)
     return (-1);
   if (opt_parse_params(opt, ac, av) != OPT_NOERR ||
       opt_getvar(opt, 'p', &port) != OPT_NOERR ||

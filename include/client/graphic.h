@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 10:09:36 2016 drozdz_b
-** Last update Wed Jul 13 22:51:31 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 23:28:49 2016 Loïc GIGOMAS
 */
 
 #ifndef GRAPHIC_H_
@@ -24,8 +24,6 @@
 #define SCREEN_WIDTH 1800
 #define SCREEN_HEIGHT 900
 #define TILE_SIZE 64
-#define MAP_HEIGH 15
-#define MAP_WIDTH 25
 
 typedef struct s_descr	t_descr;
 

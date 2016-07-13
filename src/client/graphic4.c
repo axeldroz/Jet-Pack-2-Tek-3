@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 17:33:12 2016 drozdz_b
-** Last update Wed Jul 13 23:05:06 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 23:10:54 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -16,10 +16,10 @@ void		display_texture(t_window *win, SDL_Texture *texture,
 {
   SDL_Rect	rect;
 
-  rect.w = 64;
-  rect.h = 64;
-  rect.x = x * 64;
-  rect.y = win->size_screen.y - y * 64 - 64;
+  rect.w = TILE_SIZE;
+  rect.h = TILE_SIZE;
+  rect.x = x * TILE_SIZE;
+  rect.y = win->size_screen.y - y * TILE_SIZE - TILE_SIZE;
   SDL_RenderCopy(win->renderer, texture, NULL, &rect);
 }
 
@@ -28,10 +28,10 @@ void		display_texture2(t_window *win, SDL_Texture *texture,
 {
   SDL_Rect	rect;
 
-  rect.w = 64;
-  rect.h = 64;
-  rect.x = x * 64;
-  rect.y = y * 64 - 64;
+  rect.w = TILE_SIZE;
+  rect.h = TILE_SIZE;
+  rect.x = x * TILE_SIZE;
+  rect.y = y * TILE_SIZE - TILE_SIZE;
   SDL_RenderCopy(win->renderer, texture, NULL, &rect);
 }
 

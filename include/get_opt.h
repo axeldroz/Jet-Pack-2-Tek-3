@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Wed Jul 13 16:47:59 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 16:48:00 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 23:29:59 2016 Loïc GIGOMAS
 */
 
 #ifndef GET_OPT_H_
@@ -33,9 +33,9 @@ typedef enum
 
 typedef enum
   {
-    PCHAR = 0,
-    INT = 1,
-    FLOAT = 2,
+    ePCHAR = 0,
+    eINT = 1,
+    eFLOAT = 2,
     N_OPT_TYPES = 3
   }	t_opt_type;
 

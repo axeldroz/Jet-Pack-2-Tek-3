@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 10:10:09 2016 drozdz_b
-** Last update Wed Jul 13 22:16:35 2016 drozdz_b
+** Last update Wed Jul 13 23:09:02 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -65,7 +65,7 @@ t_graph_item	*graph_create_player(t_window *win, SDL_Texture *texture,
   if (item == NULL)
     return (NULL);
   item->pos.x = 0;
-  item->size.x = 64;
+  item->size.x = TILE_SIZE;
   item->size.y = item->size.x;
   item->pos.y = 1;
   item->view.x = ((float)win->size_screen.x) / item->size.x;
