@@ -10,14 +10,15 @@
 
 #include "client/graphic.h"
 #include "foreach.h"
+#include "client/client_net.h"
 
-void		graph_game_loop(t_window *win, t_graph_item *player)
+void		graph_game_loop(t_window *win, t_descr *descr)
 {
   SDL_Event	ev;
   t_game_map *map;
   t_map *obj;
+  t_graph_item *player;
 
-  obj = graph_create_decor(win->renderer);
   map = new(t_game_map);
   printf("ret = %d\n", map_from_file(map, "map/1.map", obj));
   printf("map h = %lu, w = %lu\n", map->h, map->w);
@@ -27,26 +28,11 @@ void		graph_game_loop(t_window *win, t_graph_item *player)
   win->size_map.x = map->w;
   win->size_map.y = map->h;
   graph_display_player(win, player);
-  while(!SDL_PollEvent(&ev));
-  while (ev.type != SDL_QUIT)
-    {
-      if (ev.type != SDL_KEYDOWN)
-	    {
-	       if(ev.key.keysym.sym==SDLK_DOWN)
-	         graph_item_set_pos(player, player->pos.x, player->pos.y - 0.5F);
-	       else if (ev.key.keysym.sym==SDLK_UP)
-  	       graph_item_set_pos(player, player->pos.x, player->pos.y + 0.5F);
-	       else if (ev.key.keysym.sym==SDLK_LEFT)
-	          graph_item_set_pos(player, player->pos.x - 0.5F, player->pos.y);
-	       else if (ev.key.keysym.sym==SDLK_RIGHT)
-	        graph_item_set_pos(player, player->pos.x + 0.5F, player->pos.y);
-	    }
-      SDL_RenderClear(win->renderer);
-      graph_display_map(win, map, player);
-      graph_display_player(win, player);
-        SDL_RenderPresent(win->renderer);
-      while(!SDL_PollEvent(&ev));
-    }
+  graph_item_set_pos(player, player->pos.x, player->pos.y - 0.5F);
+  SDL_RenderClear(win->renderer);
+  graph_display_map(win, map, player);
+  graph_display_player(win, player);
+  SDL_RenderPresent(win->renderer);
 }
 
 float		graph_calc_scroll(t_graph_item *player, t_window *win)

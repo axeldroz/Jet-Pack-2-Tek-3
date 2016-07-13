@@ -1,6 +1,4 @@
 #include <SDL2/SDL.h>
-//#include <SDL/SDL_image.h>
-
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 
@@ -17,7 +15,6 @@ int		main(int ac, char **av)
   t_graph_item	*player;
   SDL_Rect	rect;
   int		ret;
-  t_vector	*vect;
   t_tcpnetc *cli;
   t_getopt *opt;
   int port;
@@ -34,23 +31,21 @@ int		main(int ac, char **av)
         return (84);
   if (!(cli = new(t_tcpnetc, host, port)))
     return (84);;
-
+ 
   memset(&des, 0, sizeof(des));
-  vect = new(t_vector);
   graph_init();
+  des.obj = graph_create_decor(win->renderer);
   ret = graph_create_window(&des.win, (SDL_Rect)
 			    {MAP_WIDTH, MAP_HEIGH, SCREEN_WIDTH, SCREEN_HEIGHT}, TILE_SIZE);
-  graph_add_texture(vect, des.win.renderer, "sprites/rocketmouse_run04@2x.png");
   rect.x = 0;
   rect.y = 0;
   rect.w = 64;
   rect.h = 64;
-  player = graph_create_player(&des.win, VGETP(SDL_Texture*, vect, 0), 1);
   des.cli = cli;
   th = new(t_thread, net_routine, &des);
   if(ret >= 0)
     {
-      graph_game_loop(&des.win, player);
+      graph_game_loop(&des.win, des);
       SDL_DestroyTexture(player->texture);
       SDL_DestroyRenderer(des.win.renderer);
       SDL_DestroyWindow(des.win.window);
