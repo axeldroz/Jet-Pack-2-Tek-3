@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 21:30:59 2016 drozdz_b
-** Last update Wed Jul 13 17:18:40 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 17:52:00 2016 Loïc GIGOMAS
 */
 
 #include "client/select_loop.h"
@@ -27,9 +27,11 @@ void			select_loop(t_descr *descr,
 	 && !fctstop->fct(fctstop->params))
     {
       if (FD_ISSET(descr->cli->socket, &readfd))
-	fctr->fct(fctr->params);
+	if (fctr->fct(fctr->params) == -1)
+	  return ;
       if (FD_ISSET(descr->cli->socket, &writefd))
-	fctw->fct(fctw->params);
+	if (fctw->fct(fctw->params) == -1)
+	  return ;
       readfd = descr->readfd;
       writefd = descr->writefd;
       timer = (struct timeval){0, 33333};
