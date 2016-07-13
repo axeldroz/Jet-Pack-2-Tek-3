@@ -9,6 +9,11 @@
 #include "get_opt.h"
 #include "thread.h"
 
+static int	comp_id(const void *a, const void *b)
+{
+  return (a - b);
+}
+
 int		main(int ac, char **av)
 {
   t_descr	*des;
@@ -29,8 +34,14 @@ int		main(int ac, char **av)
       || opt_getvar(opt, 'h', &host) != OPT_NOERR)
         return (84);
   if (!(des = malloc(sizeof(*des))) || !(cli = new(t_tcpnetc, host, port)))
-    return (84);;
+    return (84);
   memset(des, 0, sizeof(*des));
+  des->map = new(t_game_map);
+  des->players = new(t_map, &comp_id);
+  des->cli = cli;
+  des->run = 1;
+  cmutex_init(&des->lock);
+  cmutex_lock(&des->lock);
   graph_init();
   ret = graph_create_window(&des->win, (SDL_Rect)
 			    {MAP_WIDTH, MAP_HEIGH, SCREEN_WIDTH, SCREEN_HEIGHT}, TILE_SIZE);
@@ -39,14 +50,14 @@ int		main(int ac, char **av)
   rect.y = 0;
   rect.w = 64;
   rect.h = 64;
-  des->cli = cli;
-  /* th = new(t_thread, net_routine, des); */
-  des->run = 1;
   if(ret >= 0)
     {
+      th = new(t_thread, net_routine, des);
+      cmutex_wait(&des->lock);
+      printf("UNLOCKED\n");
       graph_game_loop(&des->win, des);
-      SDL_DestroyRenderer(&des->win.renderer);
-      SDL_DestroyWindow(&des->win.window);
+      SDL_DestroyRenderer(des->win.renderer);
+      SDL_DestroyWindow(des->win.window);
       delete(th);
     }
     else

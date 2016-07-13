@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 21:30:31 2016 drozdz_b
-** Last update Tue Jul 12 23:46:19 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 12:37:46 2016 Loïc GIGOMAS
 */
 
 #ifndef SELECT_LOOP_H_
@@ -28,7 +28,7 @@ typedef struct	s_func
   void		*params;
 }               t_func;
 
-void	select_loop(SOCKET fd, t_func *fctstop, t_func *fctr, t_func *fctw);
+void	select_loop(t_descr *d, t_func *fctstop, t_func *fctr, t_func *fctw);
 
 int	write_iov(t_descr *s, char *msg);
 int	iov_send(t_descr *s);

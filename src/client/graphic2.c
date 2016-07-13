@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 16:01:34 2016 drozdz_b
-** Last update Wed Jul 13 09:39:48 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 12:47:33 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -31,6 +31,7 @@ t_map		*graph_create_decor(SDL_Renderer *renderer)
   map = new(t_map, &charcomp);
   graph_add_texture_map(map, renderer, (long)'e', "sprites/object_grenade_red.png");
   graph_add_texture_map(map, renderer, (long)'c', "sprites/powerup_banana.png");
+  graph_add_texture_map(map, renderer, (long)'p', "sprites/rocketmouse_run04@2x.png");
   map_add(map, (void*)((long)'_'), (void *)-1);
   return (map);
 }

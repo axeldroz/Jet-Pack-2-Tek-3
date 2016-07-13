@@ -7,12 +7,23 @@ int	com_id(t_splited *str, t_descr *descr)
 {
   if (str->words->size >= 2)
     descr->id = atoi(VGETP(char *, str->words, 1));
+  if (descr->map->cells->size != 0)
+    {
+      write_iov(descr, "READY\n");
+      cmutex_unlock(&descr->lock);
+    }
   return (0);
 }
 
 int	com_map(t_splited *str, t_descr *descr)
 {
-  map_from_split(descr->map, str, descr->obj);
+  if (map_from_split(descr->map, str, descr->obj) != 0)
+    return (-1);
+  if (descr->id != -1)
+    {
+      write_iov(descr, "READY\n");
+      cmutex_unlock(&descr->lock);
+    }
   return (0);
 }
 

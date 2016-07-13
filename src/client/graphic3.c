@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 18:23:52 2016 drozdz_b
-** Last update Wed Jul 13 09:57:00 2016 drozdz_b
+** Last update Wed Jul 13 13:02:16 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -15,17 +15,21 @@
 void            graph_disp_all(t_window *win, t_descr *descr)
 {
   t_graph_item *player;
-  
-  player = MGET(t_graph_item*, descr->players, descr->id);
-  graph_display_map(win, map, player);
 
-  graph_display_player(win, player);
+  if ((player = MGET(t_graph_item*, descr->players,
+		     (void *)((long)descr->id))) == NULL)
+    return ;
+  graph_display_map(descr, descr->map, player, descr->players);
+
+  graph_display_player(&descr->win, player);
 }
 
 void		graph_game_loop(t_window *win, t_descr *descr)
 {
   SDL_Event	ev;
+  int		fire;
 
+  fire = 0;
   while (descr->run)
     {
       SDL_RenderClear(win->renderer);
@@ -33,16 +37,15 @@ void		graph_game_loop(t_window *win, t_descr *descr)
       SDL_RenderPresent(win->renderer);
       if (SDL_PollEvent(&ev))
     	{
-        if (ev.type == SDL_QUIT)
-           descr->run = 0;
-        else
-        {
-          if(ev.type != SDL_KEYDOWN && ev.key.keysym.sym==SDLK_SPACE)
-             write_iov(descr, "FIRE 1");         
-          if(ev.type != SDL_KEYUP && ev.key.keysym.sym==SDLK_SPACE)
-            write_iov(descr, "FIRE 0");          
-	      }
-      }
+	  if (ev.type == SDL_QUIT)
+	    descr->run = 0;
+	  if (ev.type == SDL_KEYDOWN && ev.key.keysym.sym == SDLK_SPACE
+	      && !fire && ((fire = 1) == 1))
+	    write_iov(descr, "FIRE 1");
+	  if (ev.type == SDL_KEYUP && ev.key.keysym.sym == SDLK_SPACE
+	      && fire && ((fire = 0) == 0))
+	    write_iov(descr, "FIRE 0");
+	}
     }
 }
 

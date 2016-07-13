@@ -5,36 +5,34 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 21:30:59 2016 drozdz_b
-** Last update Wed Jul 13 10:50:29 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 12:41:26 2016 Loïc GIGOMAS
 */
 
 #include "client/select_loop.h"
 
-void set_fd_value(SOCKET fd, fd_set *readfd, fd_set *writefd, struct timeval *timer)
+void			select_loop(t_descr *descr,
+				    t_func *fctstop,
+				    t_func *fctr,
+				    t_func *fctw)
 {
-    FD_ZERO(readfd);
-    FD_ZERO(writefd);
-    FD_SET(fd, readfd);
-    FD_SET(fd, writefd);
-    *timer = (struct timeval){0, 33333};
-}
+    fd_set		readfd;
+    fd_set		writefd;
+    int			ret;
+    struct timeval	timer;
 
-void select_loop(SOCKET fd, t_func *fctstop, t_func *fctr, t_func *fctw)
-{
-    fd_set readfd;
-    fd_set writefd;
-    struct timeval timer;
-
-    set_fd_value(fd, &readfd, &writefd, &timer);
-    while (select(fd + 1, &readfd, &writefd, NULL, &timer) != -1
+    readfd = descr->readfd;
+    writefd = descr->writefd;
+    timer = (struct timeval){0, 33333};
+    while (select(descr->cli->socket + 1, &readfd,
+		  &writefd, NULL, &timer) != -1
     && !fctstop->fct(fctstop->params))
     {
-      /* readfd = descr->readfd; */
-      /* writefd = descr->writefd; */
-      if (FD_ISSET(fd, &readfd))
+      if (FD_ISSET(descr->cli->socket, &readfd))
 	fctr->fct(fctr->params);
-      if (FD_ISSET(fd, &writefd))
+      if (FD_ISSET(descr->cli->socket, &writefd))
 	fctw->fct(fctw->params);
-      set_fd_value(fd, &readfd, &writefd, &timer);
+      readfd = descr->readfd;
+      writefd = descr->writefd;
+      timer = (struct timeval){0, 33333};
     }
 }

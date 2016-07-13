@@ -5,10 +5,11 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 17:33:12 2016 drozdz_b
-** Last update Wed Jul 13 09:31:09 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 12:29:05 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
+#include "foreach.h"
 
 /*t_graph_item	graph_create_player(t_window *win, SDL_Texture *texture, int zindex)
 {
@@ -40,19 +41,21 @@ void    display_texture(t_window *win, SDL_Texture *texture, float x, float y)
 void graph_disp_others(t_descr *descr, t_cond *cond)
 {
   SDL_Texture* texture;
-  
-  texture = MGET(SDL_Texture*, descr->obj, 'p');
+
+  texture = MGET(SDL_Texture*, descr->obj, (void *)((long)'p'));
   FOREACH(t_pair *, p, descr->players)
   {
-    if (p->key != descr->id && p->value->pos.x < cond.w
-        && p->value->pos.x >= cond.i2 && p->value->pos.y < cond.h
-        && p->value->pos.y >= cond.j2)
-          display_texture(descr->win, texture, cond.i - cond.w, cond.h - cond.j);
+    if ((long)p->first != descr->id
+	&& ((t_graph_item *)p->second)->pos.x < cond->w
+        && ((t_graph_item *)p->second)->pos.x >= cond->i2
+	&& ((t_graph_item *)p->second)->pos.y < cond->h
+        && ((t_graph_item *)p->second)->pos.y >= cond->j2)
+          display_texture(&descr->win, texture, cond->i - cond->w, cond->h - cond->j);
   }
 }
 
-void graph_display_map(t_window *win, t_game_map *map,
-		       t_graph_item *player, t_vector *p)
+void graph_display_map(t_descr *descr, t_game_map *map,
+		       t_graph_item *player, t_map *p)
 {
     t_cond cond;
     SDL_Texture* texture;
@@ -62,18 +65,20 @@ void graph_display_map(t_window *win, t_game_map *map,
     cond.w = player->pos.x + player->view.x / 4 * 3;
     cond.j = player->pos.y - player->view.y / 2;
     cond.j2 = player->pos.y - player->view.y / 2;
-    cond.h = player->pos.y + player->view.y / 2;    
-    while (j < w)
+    cond.h = player->pos.y + player->view.y / 2;
+    while (cond.j < cond.w)
     {
-        while (i < h)
-        {                  
-            texture = VGETP(SDL_Texture*, map->cells, (int)j * map->w + (int)i);
+        while (cond.i < cond.h)
+        {
+            texture = VGETP(SDL_Texture*, map->cells,
+			    cond.j * map->w + (int)cond.i);
             if (texture != (void *)-1 && texture != NULL)
-                display_texture(win, texture, cond.i - cond.w, cond.h - cond.j);
+                display_texture(&descr->win, texture,
+				cond.i - cond.w, cond.h - cond.j);
             graph_disp_others(descr, &cond);
-            ++i;
+            ++cond.i;
         }
-        i = 0;
-        ++j;
+        cond.i = 0;
+        ++cond.j;
     }
 }

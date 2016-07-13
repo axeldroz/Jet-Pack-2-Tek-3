@@ -12,6 +12,7 @@
 #include "game_map.h"
 #include "tcpnetc.h"
 #include "thread.h"
+#include "cross_mutex.h"
 
 typedef struct s_descr
 {
@@ -28,6 +29,7 @@ typedef struct s_descr
   int		iovcnt;
   t_map		*obj;
   t_window	win;
+  t_cmutex	lock;
 }               t_descr;
 
 typedef int	(*t_command)(t_splited *, t_descr *);

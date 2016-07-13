@@ -1,3 +1,4 @@
+#include <string.h>
 #include "client/client_net.h"
 #include "client/cmd.h"
 
@@ -42,10 +43,25 @@ int	iov_send(t_descr *s)
   return (0);
 }
 
+static int	com_unknown(t_splited *str, t_descr *descr)
+{
+  return (0);
+}
+
+static int	comp_str(const void *a, const void *b)
+{
+  const char	*_a = a;
+  const char	*_b = b;
+
+  if (!a || !b)
+    return (-1);
+  return (strcmp(a, b));
+}
 
 int	add_commands(t_descr *s)
 {
-  if (map_add(s->commands, "ID", &com_id) != MAP_NOERR ||
+  if ((s->commands = new(t_map, &comp_str)) == NULL ||
+      map_add(s->commands, "ID", &com_id) != MAP_NOERR ||
       map_add(s->commands, "MAP", &com_map) != MAP_NOERR ||
       map_add(s->commands, "COIN", &com_coin) != MAP_NOERR ||
       map_add(s->commands, "START", &com_start) != MAP_NOERR ||
@@ -54,5 +70,6 @@ int	add_commands(t_descr *s)
       fprintf(stderr, "Error.\n");
       return (-1);
     }
+  s->commands->defVal = &com_unknown;
   return (0);
 }

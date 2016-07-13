@@ -53,15 +53,24 @@ t_cth_ret net_routine(t_cth_params params)
     t_func      f1;
     t_func      f3;
 
-    add_commands(params);
-    f1.fct = &fct_stop;
-    f1.params = params;
-    f2.fct = &fct_read;
-    f2.params = params;
-    f3.fct = &fct_write;
-    f3.params = params;
     descr = (t_descr *)(params);
-    write_iov(descr, "ID\nMAP\n");
-    select_loop(descr->cli->socket, &f1, &f2, &f3);
+    descr->id = -1;
+    if (add_commands(params) == 0)
+      {
+	f1.fct = &fct_stop;
+	f1.params = params;
+	f2.fct = &fct_read;
+	f2.params = params;
+	f3.fct = &fct_write;
+	f3.params = params;
+	FD_ZERO(&descr->readfd);
+	FD_ZERO(&descr->writefd);
+	FD_SET(descr->cli->socket, &descr->readfd);
+	write_iov(descr, "ID\nMAP\n");
+	select_loop(descr, &f1, &f2, &f3);
+      }
+    if (descr->run)
+      cmutex_unlock(&descr->lock);
+    descr->run = 0;
     return (NULL);
 }

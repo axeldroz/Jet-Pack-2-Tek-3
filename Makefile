@@ -5,7 +5,7 @@
 ## Login   <gigoma_l@epitech.net>
 ##
 ## Started on  Thu Jul  7 09:25:01 2016 Loïc GIGOMAS
-## Last update Tue Jul 12 23:44:58 2016 Loïc GIGOMAS
+## Last update Wed Jul 13 11:38:00 2016 Loïc GIGOMAS
 ##
 
 BIN_SERVER	= serverJ2T3
@@ -55,6 +55,7 @@ SRC_CLIENT	= main.c 	\
 		  ../map_accessors.c	\
 		  ../get_opt.c		\
 		  ../opt_types.c	\
+		  ../cross_mutex.c	\
 		  ../gnl.c
 
 CC		= gcc
