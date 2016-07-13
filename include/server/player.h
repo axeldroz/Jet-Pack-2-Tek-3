@@ -1,3 +1,13 @@
+/*
+** player.h for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Wed Jul 13 16:48:49 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 16:48:50 2016 Loïc GIGOMAS
+*/
+
 #ifndef PLAYER_H_
 # define PLAYER_H_
 

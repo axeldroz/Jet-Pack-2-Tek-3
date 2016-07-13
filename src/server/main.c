@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:38:01 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 19:38:29 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 16:41:37 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -81,7 +81,7 @@ static int	get_args(t_server **s, int ac, char **av)
   return (get_map(*s, map));
 }
 
-int main(int ac, char **av)
+int		main(int ac, char **av)
 {
   t_server	*s;
   void		(*sig_fun)(int);
@@ -95,6 +95,7 @@ int main(int ac, char **av)
     });
   signal(SIGINT, sig_fun);
   signal(SIGQUIT, sig_fun);
+  signal(SIGPIPE, SIG_IGN);
   if (get_args(&s, ac, av) == 0 && add_commands(s) == 0)
     {
       if (select_loop(s) == -1)

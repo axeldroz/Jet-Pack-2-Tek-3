@@ -5,22 +5,22 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 18:23:52 2016 drozdz_b
-** Last update Wed Jul 13 13:26:34 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 17:17:55 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
 #include "foreach.h"
 #include "client/client_net.h"
 
-void            graph_disp_all(t_window *win, t_descr *descr)
+void		graph_disp_all(t_window *win, t_descr *descr)
 {
-  t_graph_item *player;
+  t_graph_item	*player;
 
   if ((player = MGET(t_graph_item*, descr->players,
 		     (void *)((long)descr->id))) == NULL)
     return ;
   graph_display_map(descr, descr->map, player, descr->players);
-  graph_display_player(&descr->win, player);
+  graph_display_player(win, player);
 }
 
 void		graph_game_loop(t_window *win, t_descr *descr)
@@ -50,28 +50,29 @@ void		graph_game_loop(t_window *win, t_descr *descr)
     }
 }
 
-float		graph_calc_scroll(t_graph_item *player, t_window *win)
+float	graph_calc_scroll(t_graph_item *player, t_window *win)
 {
-  float a;
+  float	a;
 
-
-    a = player->view.y / 2 + 0.5F;
+  (void)win;
+  a = player->view.y / 2 + 0.5F;
   return (a);
 }
 
-float		graph_calc_scroll_x(t_graph_item *player, t_window *win)
+float	graph_calc_scroll_x(t_graph_item *player, t_window *win)
 {
-  float a;
+  float	a;
 
-    a = player->view.x / 4 + 0.25F;
+  (void)win;
+  a = player->view.x / 4 + 0.25F;
   return (a);
 }
 
 void		graph_display_player(t_window *win, t_graph_item *item)
 {
   SDL_Rect	rect;
-  float x;
-  float y;
+  float		x;
+  float		y;
 
   x = graph_calc_scroll_x(item, win) * item->size.x;
   y = win->size_screen.y - graph_calc_scroll(item, win) * item->size.y;

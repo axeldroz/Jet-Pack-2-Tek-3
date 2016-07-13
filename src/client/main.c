@@ -1,3 +1,13 @@
+/*
+** main.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Wed Jul 13 17:12:02 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 17:12:17 2016 Loïc GIGOMAS
+*/
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
@@ -14,55 +24,58 @@ static int	comp_id(const void *a, const void *b)
   return (a - b);
 }
 
+static t_descr	*init_descr(int port, char *host)
+{
+  t_descr	*des;
+
+  if (!(des = malloc(sizeof(*des))) || !(memset(des, 0, sizeof(*des)))
+      || !(des->cli = new(t_tcpnetc, host, port))
+      || (des->map = new(t_game_map)) == NULL
+      || (des->players = new(t_map, &comp_id)) == NULL
+      || graph_init() == -1)
+    return (NULL);
+  if (graph_create_window(&des->win, (SDL_Rect){MAP_WIDTH, MAP_HEIGH,
+	  SCREEN_WIDTH, SCREEN_HEIGHT}, TILE_SIZE) < 0)
+    {
+      fprintf(stderr, "Erreur création fenêtre: %s\n", SDL_GetError());
+      free(des);
+      return (NULL);
+    }
+  if ((des->obj = graph_create_decor(des->win.renderer)) == NULL)
+    {
+      free(des);
+      return (NULL);
+    }
+  des->run = 1;
+  cmutex_init(&des->lock);
+  cmutex_lock(&des->lock);
+  return (des);
+}
+
 int		main(int ac, char **av)
 {
   t_descr	*des;
-  SDL_Rect	rect;
-  int		ret;
-  t_tcpnetc *cli;
-  t_getopt *opt;
-  int port;
-  char *host;
-  t_thread *th;
+  t_getopt	*opt;
+  int		port;
+  char		*host;
+  t_thread	*th;
 
   if ((opt = new(t_getopt)) == NULL
-       || opt_register(opt, 'p', INT, MANDATORY) != OPT_NOERR
-       || opt_register(opt, 'h', PCHAR, MANDATORY) != OPT_NOERR)
+      || opt_register(opt, 'p', INT, MANDATORY) != OPT_NOERR
+      || opt_register(opt, 'h', PCHAR, MANDATORY) != OPT_NOERR)
     return (84);
   if (opt_parse_params(opt, ac, av) != OPT_NOERR
       || opt_getvar(opt, 'p', &port) != OPT_NOERR
       || opt_getvar(opt, 'h', &host) != OPT_NOERR)
-        return (84);
-  if (!(des = malloc(sizeof(*des))) || !(cli = new(t_tcpnetc, host, port)))
     return (84);
-  memset(des, 0, sizeof(*des));
-  des->map = new(t_game_map);
-  des->players = new(t_map, &comp_id);
-  des->cli = cli;
-  des->run = 1;
-  cmutex_init(&des->lock);
-  cmutex_lock(&des->lock);
-  graph_init();
-  ret = graph_create_window(&des->win, (SDL_Rect)
-			    {MAP_WIDTH, MAP_HEIGH, SCREEN_WIDTH, SCREEN_HEIGHT}, TILE_SIZE);
-  des->obj = graph_create_decor(des->win.renderer);
-  rect.x = 0;
-  rect.y = 0;
-  rect.w = 64;
-  rect.h = 64;
-  if(ret >= 0)
-    {
-      th = new(t_thread, net_routine, des);
-      cmutex_wait(&des->lock);
-      graph_game_loop(&des->win, des);
-      SDL_DestroyRenderer(des->win.renderer);
-      SDL_DestroyWindow(des->win.window);
-      delete(th);
-    }
-    else
-    {
-      fprintf(stderr,"Erreur de création de la fenêtre: %s\n", SDL_GetError());
-    }
+  if ((des = init_descr(port, host)) == NULL)
+    return (84);
+  th = new(t_thread, net_routine, des);
+  cmutex_wait(&des->lock);
+  graph_game_loop(&des->win, des);
+  SDL_DestroyRenderer(des->win.renderer);
+  SDL_DestroyWindow(des->win.window);
+  delete(th);
   free(des);
   SDL_Quit();
   return 0;

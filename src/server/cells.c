@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:40:38 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 10:45:12 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 16:42:08 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -21,7 +21,7 @@ int	cell_empty(NSD t_pair *p, NSD void **c, NSD t_pair *b, NSD size_t pos)
   return (0);
 }
 
-int	cell_elec(t_pair *p, NSD void **c, NSD t_pair *b, NSD size_t pos)
+int		cell_elec(t_pair *p, NSD void **c, NSD t_pair *b, NSD size_t pos)
 {
   t_server	*s;
   t_player	*pl;

@@ -1,3 +1,13 @@
+/*
+** cmd.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Wed Jul 13 17:11:06 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 17:11:30 2016 Loïc GIGOMAS
+*/
+
 #include <stdlib.h>
 #include "game_map.h"
 #include "map.h"
@@ -27,17 +37,19 @@ int	com_map(t_splited *str, t_descr *descr)
   return (0);
 }
 
-int	com_player(t_splited *str, t_descr *descr)
+int		com_player(t_splited *str, t_descr *descr)
 {
-  t_graph_item *player;
-  long id;
+  t_graph_item	*player;
+  long		id;
 
   cmutex_lock(&descr->lock);
   id = atoi(VGETP(char *, str->words, 1));
   player = MGET(t_graph_item *, descr->players, (void *)id);
   if (player == NULL)
     {
-      player = graph_create_player(&descr->win, MGET(SDL_Texture *, descr->obj, (void *)((long)'p')),
+      player = graph_create_player(&descr->win,
+				   MGET(SDL_Texture *, descr->obj,
+					(void *)((long)'p')),
 				   (descr->id == id) ? 1 : 0);
       map_add(descr->players, (void *)id, player);
     }

@@ -1,3 +1,13 @@
+/*
+** client_net.h for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Wed Jul 13 16:51:02 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 16:51:15 2016 Loïc GIGOMAS
+*/
+
 #ifndef CLIENT_NET_H_
 #define CLIENT_NET_H_
 
@@ -14,7 +24,7 @@
 #include "thread.h"
 #include "cross_mutex.h"
 
-typedef struct s_descr
+typedef struct	s_descr
 {
   t_game_map	*map;
   t_map		*players;
@@ -38,6 +48,5 @@ t_cth_ret	net_routine(t_cth_params params);
 
 int	write_iov(t_descr *s, char *msg);
 int	iov_send(t_descr *s);
-
 
 #endif

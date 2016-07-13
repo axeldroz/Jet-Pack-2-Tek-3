@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 10:10:09 2016 drozdz_b
-** Last update Tue Jul 12 21:39:41 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 17:16:06 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -20,7 +20,7 @@ int	graph_init()
     }
   if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
     {
-      fprintf(stderr,"Fail IMG_Init() : %s\n",SDL_GetError());
+      fprintf(stderr, "Fail IMG_Init() : %s\n", SDL_GetError());
       SDL_Quit();
       return (-1);
     }
@@ -45,7 +45,8 @@ int	graph_create_window(t_window *win, SDL_Rect rect, int size_tile)
       fprintf(stderr, "Fail SDL_CreateWindow() : %s\n", SDL_GetError());
       return (-1);
     }
-  win->renderer = SDL_CreateRenderer(win->window, -1, SDL_RENDERER_ACCELERATED);
+  win->renderer = SDL_CreateRenderer(win->window, -1,
+				     SDL_RENDERER_ACCELERATED);
   if (win->renderer == NULL)
     {
       fprintf(stderr, "Fail SDL_CreateRenderer() : %s\n", SDL_GetError());
@@ -55,7 +56,8 @@ int	graph_create_window(t_window *win, SDL_Rect rect, int size_tile)
   return (0);
 }
 
-t_graph_item	*graph_create_player(t_window *win, SDL_Texture *texture, int zindex)
+t_graph_item	*graph_create_player(t_window *win, SDL_Texture *texture,
+				     int zindex)
 {
   t_graph_item	*item;
 
@@ -83,7 +85,7 @@ void	graph_item_set_pos(t_graph_item *item, float x, float y)
 int		graph_add_texture(t_vector *vect, SDL_Renderer *renderer,
 				  const char *path)
 {
-  SDL_Texture*	texture;
+  SDL_Texture	*texture;
 
   texture = IMG_LoadTexture(renderer, path);
   if (texture == NULL)

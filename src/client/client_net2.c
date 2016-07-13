@@ -1,3 +1,13 @@
+/*
+** client_net2.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Wed Jul 13 17:11:37 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 17:11:50 2016 Loïc GIGOMAS
+*/
+
 #include <string.h>
 #include "client/client_net.h"
 #include "client/cmd.h"

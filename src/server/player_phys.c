@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:39:49 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 15:49:36 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 16:41:52 2016 Loïc GIGOMAS
 */
 
 #include <math.h>
@@ -39,7 +39,7 @@ void	update_pos(t_server *s, t_player *p, double time)
   p->entity->x += p->entity->speed_x * time;
 }
 
-int	check_colliders(t_server *s, t_player *p, char *b, size_t *o)
+int		check_colliders(t_server *s, t_player *p, char *b, size_t *o)
 {
   size_t	c;
   t_pair	*pa;

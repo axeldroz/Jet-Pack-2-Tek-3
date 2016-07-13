@@ -5,20 +5,10 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 16:01:34 2016 drozdz_b
-** Last update Wed Jul 13 13:27:15 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 17:16:49 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
-
-t_vector	*graph_create_players_text(t_window *win, t_vector *textures)
-{
-  t_vector	*players;
-
-  players = new(t_vector);
-  graph_add_texture(players, win->renderer,
-		    "sprites/rocketmouse_run04@2x.png");
-  return (players);
-}
 
 static int	charcomp(const void *a, const void *b)
 {
@@ -43,7 +33,7 @@ t_map	*graph_create_decor(SDL_Renderer *renderer)
 int		graph_add_texture_map(t_map *map, SDL_Renderer *renderer,
 				      long key, const char *path)
 {
-  SDL_Texture*	texture;
+  SDL_Texture	*texture;
 
   texture = IMG_LoadTexture(renderer, path);
   if (texture == NULL)
@@ -57,7 +47,7 @@ int		graph_add_texture_map(t_map *map, SDL_Renderer *renderer,
 
 void		graph_display(SDL_Renderer *renderer, t_graph_item *item)
 {
-  SDL_Rect rect;
+  SDL_Rect	rect;
 
   rect.x = item->pos.x * item->size.x;
   rect.y = item->pos.y * item->size.y;
