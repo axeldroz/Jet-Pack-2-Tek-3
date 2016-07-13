@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Fri Jul  8 18:45:30 2016 Loïc GIGOMAS
-** Last update Wed Jul 13 01:02:44 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 17:24:52 2016 Loïc GIGOMAS
 */
 
 #ifndef ENTITY_H_
@@ -21,7 +21,7 @@
 # define DRAG_COEFF	(1.0)
 # define OBJ_DIAMETER	(1.0)
 # define FLUID_DENS	(AIR)
-# define OBJ_DENS	(IRON)
+# define OBJ_DENS	((WATER + IRON) / 2.0)
 
 typedef struct	s_entity_init
 {
