@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 18:23:52 2016 drozdz_b
-** Last update Wed Jul 13 13:02:16 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 13:26:34 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -20,7 +20,6 @@ void            graph_disp_all(t_window *win, t_descr *descr)
 		     (void *)((long)descr->id))) == NULL)
     return ;
   graph_display_map(descr, descr->map, player, descr->players);
-
   graph_display_player(&descr->win, player);
 }
 
@@ -32,9 +31,11 @@ void		graph_game_loop(t_window *win, t_descr *descr)
   fire = 0;
   while (descr->run)
     {
+      cmutex_lock(&descr->lock);
       SDL_RenderClear(win->renderer);
       graph_disp_all(win, descr);
       SDL_RenderPresent(win->renderer);
+      cmutex_unlock(&descr->lock);
       if (SDL_PollEvent(&ev))
     	{
 	  if (ev.type == SDL_QUIT)

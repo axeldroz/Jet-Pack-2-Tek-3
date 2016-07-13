@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Sat Jul 09 16:01:34 2016 drozdz_b
-** Last update Wed Jul 13 12:47:33 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 13:27:15 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -15,7 +15,8 @@ t_vector	*graph_create_players_text(t_window *win, t_vector *textures)
   t_vector	*players;
 
   players = new(t_vector);
-  graph_add_texture(players, win->renderer, "sprites/rocketmouse_run04@2x.png");
+  graph_add_texture(players, win->renderer,
+		    "sprites/rocketmouse_run04@2x.png");
   return (players);
 }
 
@@ -24,14 +25,17 @@ static int	charcomp(const void *a, const void *b)
   return (a - b);
 }
 
-t_map		*graph_create_decor(SDL_Renderer *renderer)
+t_map	*graph_create_decor(SDL_Renderer *renderer)
 {
-  t_map		*map;
+  t_map	*map;
 
   map = new(t_map, &charcomp);
-  graph_add_texture_map(map, renderer, (long)'e', "sprites/object_grenade_red.png");
-  graph_add_texture_map(map, renderer, (long)'c', "sprites/powerup_banana.png");
-  graph_add_texture_map(map, renderer, (long)'p', "sprites/rocketmouse_run04@2x.png");
+  graph_add_texture_map(map, renderer, (long)'e',
+			"sprites/object_grenade_red.png");
+  graph_add_texture_map(map, renderer, (long)'c',
+			"sprites/powerup_banana.png");
+  graph_add_texture_map(map, renderer, (long)'p',
+			"sprites/rocketmouse_run04@2x.png");
   map_add(map, (void*)((long)'_'), (void *)-1);
   return (map);
 }

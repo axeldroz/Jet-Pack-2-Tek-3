@@ -46,6 +46,24 @@ void        *fct_read(void *params)
   return ((void *)(r >= 3 ? -1L : 0L));
 }
 
+static int	com_finish(t_splited *str, t_descr *descr)
+{
+  int		id;
+
+  if (str->words->size >= 2)
+    {
+      id = atoi(VGETP(char *, str->words, 1));
+      if (id == descr->id)
+	printf("You win !\n");
+      else if (id != -1)
+	printf("You loose !\n");
+      else
+	printf("Nobody win.\n");
+    }
+  descr->run = 0;
+  return (0);
+}
+
 t_cth_ret net_routine(t_cth_params params)
 {
     t_descr     *descr;
@@ -55,7 +73,7 @@ t_cth_ret net_routine(t_cth_params params)
 
     descr = (t_descr *)(params);
     descr->id = -1;
-    if (add_commands(params) == 0)
+    if (add_commands(params, &com_finish) == 0)
       {
 	f1.fct = &fct_stop;
 	f1.params = params;

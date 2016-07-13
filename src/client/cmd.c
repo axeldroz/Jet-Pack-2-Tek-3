@@ -32,6 +32,7 @@ int	com_player(t_splited *str, t_descr *descr)
   t_graph_item *player;
   long id;
 
+  cmutex_lock(&descr->lock);
   id = atoi(VGETP(char *, str->words, 1));
   player = MGET(t_graph_item *, descr->players, (void *)id);
   if (player == NULL)
@@ -43,15 +44,27 @@ int	com_player(t_splited *str, t_descr *descr)
   player->pos.x = atof(VGETP(char *, str->words, 2));
   player->pos.y = atof(VGETP(char *, str->words, 3));
   player->coins = atoi(VGETP(char *, str->words, 4));
+  cmutex_unlock(&descr->lock);
   return (0);
 }
 
 int	com_start(t_splited *str, t_descr *descr)
 {
+  (void) str;
+  (void) descr;
   return (0);
 }
 
 int	com_coin(t_splited *str, t_descr *descr)
 {
+  int	x;
+  int	y;
+
+  if (str->words->size < 4)
+    return (0);
+  x = atoi(VGETP(char *, str->words, 2));
+  y = atoi(VGETP(char *, str->words, 3));
+  descr->map->cells->array[(descr->map->h - y - 1)
+			   * descr->map->w + x] = (void *)-1;
   return (0);
 }

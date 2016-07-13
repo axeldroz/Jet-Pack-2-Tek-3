@@ -24,7 +24,6 @@ int		write_iov(t_descr *s, char *msg)
   s->io[s->iovcnt].iov_len = len;
   ++s->iovcnt;
   FD_SET(s->cli->socket, &s->writefd);
-  printf("Attempt to send \"%s\"\n", msg);
   return (0);
 }
 
@@ -32,10 +31,8 @@ int	iov_send(t_descr *s)
 {
   int	i;
 
-  printf("Sending %d messages...\n", s->iovcnt);
   if (writev(s->cli->socket, s->io, s->iovcnt) == -1)
     return (-1);
-  printf("Sent!\n");
   for (i = 0; i < s->iovcnt; ++i)
     free(s->io[i].iov_base);
   s->iovcnt = 0;
@@ -45,6 +42,8 @@ int	iov_send(t_descr *s)
 
 static int	com_unknown(t_splited *str, t_descr *descr)
 {
+  (void) str;
+  (void) descr;
   return (0);
 }
 
@@ -55,17 +54,18 @@ static int	comp_str(const void *a, const void *b)
 
   if (!a || !b)
     return (-1);
-  return (strcmp(a, b));
+  return (strcmp(_a, _b));
 }
 
-int	add_commands(t_descr *s)
+int	add_commands(t_descr *s, int (*finish)(t_splited *, t_descr *))
 {
   if ((s->commands = new(t_map, &comp_str)) == NULL ||
       map_add(s->commands, "ID", &com_id) != MAP_NOERR ||
       map_add(s->commands, "MAP", &com_map) != MAP_NOERR ||
       map_add(s->commands, "COIN", &com_coin) != MAP_NOERR ||
       map_add(s->commands, "START", &com_start) != MAP_NOERR ||
-      map_add(s->commands, "PLAYER", &com_player) != MAP_NOERR)
+      map_add(s->commands, "PLAYER", &com_player) != MAP_NOERR ||
+      map_add(s->commands, "FINISH", finish) != MAP_NOERR)
     {
       fprintf(stderr, "Error.\n");
       return (-1);

@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 17:33:12 2016 drozdz_b
-** Last update Wed Jul 13 12:29:05 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 13:38:14 2016 Loïc GIGOMAS
 */
 
 #include "client/graphic.h"
@@ -40,9 +40,6 @@ void    display_texture(t_window *win, SDL_Texture *texture, float x, float y)
 
 void graph_disp_others(t_descr *descr, t_cond *cond)
 {
-  SDL_Texture* texture;
-
-  texture = MGET(SDL_Texture*, descr->obj, (void *)((long)'p'));
   FOREACH(t_pair *, p, descr->players)
   {
     if ((long)p->first != descr->id
@@ -50,7 +47,8 @@ void graph_disp_others(t_descr *descr, t_cond *cond)
         && ((t_graph_item *)p->second)->pos.x >= cond->i2
 	&& ((t_graph_item *)p->second)->pos.y < cond->h
         && ((t_graph_item *)p->second)->pos.y >= cond->j2)
-          display_texture(&descr->win, texture, cond->i - cond->w, cond->h - cond->j);
+      display_texture(&descr->win, ((t_graph_item *)p->second)->texture,
+		      cond->i - cond->w, cond->h - cond->j);
   }
 }
 

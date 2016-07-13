@@ -54,7 +54,6 @@ int		main(int ac, char **av)
     {
       th = new(t_thread, net_routine, des);
       cmutex_wait(&des->lock);
-      printf("UNLOCKED\n");
       graph_game_loop(&des->win, des);
       SDL_DestroyRenderer(des->win.renderer);
       SDL_DestroyWindow(des->win.window);
