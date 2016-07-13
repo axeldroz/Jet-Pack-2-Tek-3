@@ -15,26 +15,27 @@
 
 typedef struct s_descr
 {
-    t_game_map  *map;
-    t_map     *players;
-    int          id;
-    t_tcpnetc    *cli;
-    t_map       *commands;
-    t_gnl        gnl;
-    fd_set readfd;
-    fd_set writefd;
-    int run;
-    struct iovec io;
-    int iovcnt;
-    t_map *obj;
-    t_window *win;
+  t_game_map	*map;
+  t_map		*players;
+  int		id;
+  t_tcpnetc	*cli;
+  t_map		*commands;
+  t_gnl		gnl;
+  fd_set	readfd;
+  fd_set	writefd;
+  int		run;
+  struct iovec	io[16];
+  int		iovcnt;
+  t_map		*obj;
+  t_window	win;
 }               t_descr;
 
 typedef int	(*t_command)(t_splited *, t_descr *);
 
-t_cth_ret net_routine(t_cth_params params);
-int		write_iov(t_descr *s, char *msg);
-int	    iov_send(t_descr *s);
+t_cth_ret	net_routine(t_cth_params params);
+
+int	write_iov(t_descr *s, char *msg);
+int	iov_send(t_descr *s);
 
 
 #endif

@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:38:48 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 22:46:02 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 00:34:38 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -117,7 +117,7 @@ int			select_loop(t_server *s)
     {
       rfds = s->readfds;
       wfds = s->writefds;
-      tv = (struct timeval){0, 24000};
+      tv = (struct timeval){0, 20000};
       if (game_loop(s, &wfds) == -1 ||
 	  (rs = select(s->max_fd + 1, &rfds, &wfds, NULL, &tv)) == -1)
 	return (-1);

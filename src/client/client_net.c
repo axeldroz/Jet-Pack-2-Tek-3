@@ -2,7 +2,7 @@
 #include "tcpnetc.h"
 #include "thread.h"
 
-#include "select_loop.h"
+#include "client/select_loop.h"
 
 void        *fct_stop(void *params)
 {
@@ -12,9 +12,9 @@ void        *fct_stop(void *params)
 void        *fct_write(void *params)
 {
     t_descr     *descr;
-    
+
     descr = (t_descr *)(params);
-    return ((void *)send_iov(descr));
+    return ((void *)(long)iov_send(descr));
 }
 
 void        *fct_read(void *params)
@@ -28,22 +28,23 @@ void        *fct_read(void *params)
   str = NULL;
   first = 1;
   s = params;
-  while (c && (r = get_next_line(&s->gnl, (first ? s->cli->socket : -1), &str)) < 2)
+  while ((r = get_next_line(&s->gnl, (first ? s->cli->socket : -1), &str)) < 2)
     {
       if (r == 0 || r == 1)
 	{
 	  if ((cmp = new(t_splited, str)) == NULL)
-	    return(-1);
+	    return((void *)-1);
 	  r = MGET(t_command, s->commands,
 		   VGETP(char *, cmp->words, 0))(cmp, s);
 	  free(str);
 	  delete(cmp);
 	  if (r == -1)
-	    return (-1);
+	    return ((void *)-1);
 	}
       first = 0;
     }
-  return (r >= 3 ? -1 : 0);}
+  return ((void *)(r >= 3 ? -1L : 0L));
+}
 
 t_cth_ret net_routine(t_cth_params params)
 {
@@ -59,6 +60,7 @@ t_cth_ret net_routine(t_cth_params params)
     f3.fct = &fct_write;
     f3.params = params;
     descr = (t_descr *)(params);
-    select_loop(descr->cli->socket, f1, f2, f3);
+    write_iov(descr, "ID\nMAP\n");
+    select_loop(descr->cli->socket, &f1, &f2, &f3);
     return (NULL);
 }
