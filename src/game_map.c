@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Sat Jul  9 18:17:56 2016 Loïc GIGOMAS
-** Last update Mon Jul 11 17:53:28 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 10:43:35 2016 Loïc GIGOMAS
 */
 
 #ifdef _WIN32
@@ -109,8 +109,8 @@ t_game_map	*t_game_map_new(__attribute__((unused))t_game_map_init var)
 {
   t_game_map	*m;
 
-  if ((m = (t_game_map *)new(t_object, sizeof(t_game_map), &gma_del)) == NULL ||
-      (m->cells = new(t_vector)) == NULL)
+  if ((m = (t_game_map *)new(t_object, sizeof(t_game_map), &gma_del)) == NULL
+      || (m->cells = new(t_vector)) == NULL)
     return (NULL);
   return (m);
 }

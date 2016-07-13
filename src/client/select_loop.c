@@ -5,7 +5,7 @@
 ** Login   <drozdz_b@epitech.net>
 **
 ** Started on  Tue Jul 12 21:30:59 2016 drozdz_b
-** Last update Tue Jul 12 23:48:00 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 10:50:29 2016 Loïc GIGOMAS
 */
 
 #include "client/select_loop.h"
@@ -29,6 +29,8 @@ void select_loop(SOCKET fd, t_func *fctstop, t_func *fctr, t_func *fctw)
     while (select(fd + 1, &readfd, &writefd, NULL, &timer) != -1
     && !fctstop->fct(fctstop->params))
     {
+      /* readfd = descr->readfd; */
+      /* writefd = descr->writefd; */
       if (FD_ISSET(fd, &readfd))
 	fctr->fct(fctr->params);
       if (FD_ISSET(fd, &writefd))

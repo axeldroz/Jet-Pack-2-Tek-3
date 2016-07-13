@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:39:49 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 19:51:10 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 10:48:14 2016 Loïc GIGOMAS
 */
 
 #include "server/player.h"
@@ -71,8 +71,8 @@ int	check_colliders(t_server *s, t_player *p, char *b, size_t *o)
 */
 static int	get_cx(t_player *p, int corner)
 {
-  return (p->entity->x + (p->entity->width / 2.0) +
-	  (corner == 0 || corner == 1 ?
+  return (p->entity->x + (p->entity->width / 2.0)
+	  + (corner == 0 || corner == 1 ?
 	   -((p->entity->width / 2.0) * 0.99):
 	   ((p->entity->width / 2.0) * 0.99)));
 }
@@ -82,8 +82,8 @@ static int	get_cx(t_player *p, int corner)
 */
 static int	get_cy(t_player *p, int corner)
 {
-  return (p->entity->y + (p->entity->height / 2.0) +
-	  (corner == 0 || corner == 3 ?
+  return (p->entity->y + (p->entity->height / 2.0)
+	  + (corner == 0 || corner == 3 ?
 	   -((p->entity->height / 2.0) * 0.99):
 	   ((p->entity->height / 2.0) * 0.99)));
 }
@@ -93,5 +93,6 @@ static int	get_cy(t_player *p, int corner)
 */
 size_t	get_cell(t_server *s, t_player *p, int c)
 {
-  return ((s->game.map->h - get_cy(p, c) - 1.0) * s->game.map->w + get_cx(p, c));
+  return ((s->game.map->h - get_cy(p, c) - 1.0)
+	  * s->game.map->w + get_cx(p, c));
 }

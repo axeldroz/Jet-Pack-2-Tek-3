@@ -5,7 +5,7 @@
 ** Login   <gigoma_l@epitech.net>
 **
 ** Started on  Tue Jul 12 19:40:38 2016 Loïc GIGOMAS
-** Last update Tue Jul 12 19:51:19 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 10:45:12 2016 Loïc GIGOMAS
 */
 
 #include <stdio.h>
@@ -35,13 +35,12 @@ int	cell_elec(t_pair *p, NSD void **c, NSD t_pair *b, NSD size_t pos)
   return (0);
 }
 
-int		cell_coin(t_pair *p, void **cell, t_pair *b,size_t pos)
+int		cell_coin(t_pair *p, void **cell, t_pair *b, size_t pos)
 {
   char		*buff;
   size_t	*offset;
   t_server	*s;
   t_player	*pl;
-
 
   buff = b->first;
   offset = b->second;

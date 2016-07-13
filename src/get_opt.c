@@ -1,3 +1,13 @@
+/*
+** get_opt.c for jetpack2Tek3 in /home/gigoma_l/rendu/jetpack2Tek3
+**
+** Made by Loïc GIGOMAS
+** Login   <gigoma_l@epitech.net>
+**
+** Started on  Wed Jul 13 10:44:15 2016 Loïc GIGOMAS
+** Last update Wed Jul 13 10:44:16 2016 Loïc GIGOMAS
+*/
+
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
