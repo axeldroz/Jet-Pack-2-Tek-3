@@ -32,7 +32,7 @@ static t_descr	*init_descr(int port, char *host)
       || !(des->cli = new(t_tcpnetc, host, port))
       || (des->map = new(t_game_map)) == NULL
       || (des->players = new(t_map, &comp_id)) == NULL
-      || graph_init() == -1)
+      /*|| graph_init() == -1*/)
     return (NULL);
   if (graph_create_window(&des->win, (SDL_Rect){MAP_WIDTH, MAP_HEIGH,
 	  SCREEN_WIDTH, SCREEN_HEIGHT}, TILE_SIZE) < 0)
@@ -73,10 +73,10 @@ int		main(int ac, char **av)
   th = new(t_thread, net_routine, des);
   cmutex_wait(&des->lock);
   graph_game_loop(&des->win, des);
-  SDL_DestroyRenderer(des->win.renderer);
-  SDL_DestroyWindow(des->win.window);
-  delete(th);
-  free(des);
-  SDL_Quit();
+  //SDL_DestroyRenderer(des->win.renderer);
+  //SDL_DestroyWindow(des->win.window);
+  //delete(th);
+  //free(des);
+  //SDL_Quit();
   return 0;
 }

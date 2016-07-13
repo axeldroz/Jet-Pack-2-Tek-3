@@ -43,29 +43,13 @@ void		graph_game_loop(t_window *win, t_descr *descr)
 	  if (ev.type == SDL_KEYDOWN && ev.key.keysym.sym == SDLK_SPACE
 	      && !fire && ((fire = 1) == 1))
 	    write_iov(descr, "FIRE 1");
-	  if (ev.type == SDL_KEYUP && ev.key.keysym.sym == SDLK_SPACE
+	 if (ev.type == SDL_KEYUP && ev.key.keysym.sym == SDLK_SPACE
 	      && fire && ((fire = 0) == 0))
 	    write_iov(descr, "FIRE 0");
 	}
+        usleep(10000);
     }
-}
-
-float	graph_calc_scroll(t_graph_item *player, t_window *win)
-{
-  float	a;
-
-  (void)win;
-  a = player->view.y / 2 + 0.5F;
-  return (a);
-}
-
-float	graph_calc_scroll_x(t_graph_item *player, t_window *win)
-{
-  float	a;
-
-  (void)win;
-  a = player->view.x / 4 + 0.25F;
-  return (a);
+ 
 }
 
 void		graph_display_player(t_window *win, t_graph_item *item)
@@ -74,11 +58,12 @@ void		graph_display_player(t_window *win, t_graph_item *item)
   float		x;
   float		y;
 
-  x = graph_calc_scroll_x(item, win) * item->size.x;
-  y = win->size_screen.y - graph_calc_scroll(item, win) * item->size.y;
+  x = (item->view.x / 4) * item->size.x;
+  y = (item->view.y / 2) * item->size.y;
   rect.x = x;
   rect.y = y;
   rect.w = item->size.x;
   rect.h = item->size.y;
+  //printf("Player : x=%f y=%f\n", item->pos.x, item->pos.y);
   SDL_RenderCopy(win->renderer, item->texture, NULL, &rect);
 }

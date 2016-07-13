@@ -97,7 +97,8 @@ t_cth_ret	net_routine(t_cth_params params)
       write_iov(descr, "ID\nMAP\n");
       select_loop(descr, &f1, &f2, &f3);
     }
-  if (descr->run)
+  if (descr->run && (descr->id == -1 ||
+    descr->map->cells->size == 0))
     cmutex_unlock(&descr->lock);
   descr->run = 0;
   return (NULL);

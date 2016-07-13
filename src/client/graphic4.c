@@ -33,7 +33,8 @@ void	graph_disp_others(t_descr *descr, t_cond *cond)
 	  && ((t_graph_item *)p->second)->pos.y < cond->h
 	  && ((t_graph_item *)p->second)->pos.y >= cond->j2)
 	display_texture(&descr->win, ((t_graph_item *)p->second)->texture,
-			cond->i - cond->w, cond->h - cond->j);
+			((t_graph_item *)p->second)->pos.x - cond->i2,
+      ((t_graph_item *)p->second)->pos.y - cond->j2 - 1);
     }
 }
 
@@ -58,7 +59,7 @@ void			graph_display_map(t_descr *descr, t_game_map *map,
 			  cond.j * map->w + (int)cond.i);
 	  if (texture != (void *)-1 && texture != NULL)
 	    display_texture(&descr->win, texture,
-			    cond.i - cond.w, cond.h - cond.j);
+			    cond.j - cond.j2 -1, cond.i - cond.i2);
 	  ++cond.i;
         }
       cond.i = 0;
