@@ -5,16 +5,14 @@ Date début de développement : 07 / 07 / 2016
 Collaborateurs : Loïc GIGOMAS et Axel DROZDZYNSKI
 
 Projet :
-\nIl s'agit de l'adaptation du fameux jeu mobile Jetpack Joyride sur PC linux.
-\nLe jeu prévoit permet de plus un mode multijoueur en réseau très sympatique pour jouer avec ses amis.
+Il s'agit de l'adaptation du fameux jeu mobile Jetpack Joyride sur PC linux.
+Le jeu prévoit permet de plus un mode multijoueur en réseau très sympatique pour jouer avec ses amis.
        
 Architecture programme :
-\nLe programme a été entièrement réalisé en C modulaire.
-\nLes modules développés utilise des bibliotèque cross-plateformes (Linux / Windows) dans l'objectif
-\nd'un futur déployment sur Windows.
+Le programme a été entièrement réalisé en C modulaire.
+Les modules développés utilise des bibliotèque cross-plateformes (Linux / Windows) dans l'objectif
+d'un futur déployment sur Windows.
 
 Bibliotèque utilisées :
   - C POSIX.
   - SDL 2
-  
-  
