@@ -1,18 +1,19 @@
-<p># Jet-Pack-2-Tek-3</p>
-<p>Jet Pack 2 Tek 3 est un projet Epitech réalisé au sein d'Epitech Bordeaux.</p>
+# Jet-Pack-2-Tek-3
+<p>Jet Pack is a school project of Epitech.</p>
 
-<p>Date début de développement : 07 / 07 / 2016<br/>
+<p>Dates : July 7th 2016 to July 13th 2016<br/>
 Collaborateurs : Loïc GIGOMAS et Axel DROZDZYNSKI</p>
 
-<p>Projet :<br/>
-Il s'agit de l'adaptation du fameux jeu mobile Jetpack Joyride sur PC linux.<br/>
-Le jeu prévoit permet de plus un mode multijoueur en réseau très sympatique pour jouer avec ses amis.</p>
+<h3>Project :</h3>
+<p>This is the adaptation of the famous mobile game Jetpack Joyride PC linux.<br/>
+Plus, the game allows a friendly multiplayer using for playing with friends.</p>
        
-<p>Architecture programme :<br/>
-Le programme a été entièrement réalisé en C modulaire.<br/>
-Les modules développés utilise des bibliotèque cross-plateformes (Linux / Windows) dans l'objectif
-d'un futur déployment sur Windows.</p>
+<h3>Technologies :</h3>
+<p>The program is entirely written in modular C implementation.
+The built modules use cross-platform libraries in order to deploy a future version for windows.</p>
 
-Bibliotèque utilisées :
-  - C POSIX
-  - SDL 2
+<h3>Used Libraries :</h3>
+<ul>
+  <li>C POSIX</li>
+  <li>SDL 2</li>
+</ul>
